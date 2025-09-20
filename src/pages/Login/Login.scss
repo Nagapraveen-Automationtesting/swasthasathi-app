@@ -1,0 +1,516 @@
+// Login Page SCSS - Healthcare Theme
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+// Variables
+$primary-color: #2563eb;
+$primary-hover: #1d4ed8;
+$secondary-color: #0ea5e9;
+$success-color: #059669;
+$error-color: #dc2626;
+$warning-color: #d97706;
+
+$text-primary: #1f2937;
+$text-secondary: #6b7280;
+$text-light: #9ca3af;
+
+$bg-primary: #ffffff;
+$bg-secondary: #f8fafc;
+$bg-overlay: rgba(255, 255, 255, 0.95);
+
+$border-color: #e5e7eb;
+$border-focus: #3b82f6;
+
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+$border-radius: 8px;
+$border-radius-lg: 12px;
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin transition($property: all, $duration: 0.2s, $timing: ease-in-out) {
+  transition: $property $duration $timing;
+}
+
+@mixin input-focus {
+  outline: none;
+  border-color: $border-focus;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+// Main login container
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  position: relative;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  
+  // Healthcare background overlay
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><pattern id="healthcarePattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/><path d="M45 45h10v2h-10zm2 2v10h2v-10z" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100%" height="100%" fill="url(%23healthcarePattern)"/></svg>');
+    background-size: 200px 200px;
+    opacity: 0.3;
+    z-index: 1;
+  }
+  
+  // Left side - Healthcare imagery and branding
+  .left-section {
+    flex: 1;
+    position: relative;
+    background: linear-gradient(
+      135deg,
+      rgba(37, 99, 235, 0.9) 0%,
+      rgba(14, 165, 233, 0.9) 50%,
+      rgba(5, 150, 105, 0.9) 100%
+    );
+    @include flex-center;
+    flex-direction: column;
+    padding: 2rem;
+    z-index: 2;
+    
+    // Healthcare illustration placeholder - REMOVED from component
+    // .healthcare-illustration {
+    //   width: 100%;
+    //   max-width: 300px;
+    //   height: 120px;
+    //   background-size: contain;
+    //   margin-bottom: 1rem;
+    //   opacity: 0.3;
+    // }
+    
+    .branding {
+      text-align: center;
+      color: white;
+      margin-top: 0; // Ensure no extra margin at top
+      
+      .brand-logo {
+        width: 120px;
+        height: auto;
+        max-height: 80px;
+        margin-bottom: 1.5rem;
+        margin-top: 0; // Remove any default top margin
+        border-radius: 12px;
+        // box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        // background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        padding: 0.5rem;
+        @include transition(transform, 0.3s, ease-in-out);
+        
+        &:hover {
+          transform: scale(1.05);
+        }
+      }
+      
+      .brand-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        background: linear-gradient(45deg, #ffffff, #e0f2fe);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+      }
+      
+      .brand-subtitle {
+        font-size: 1.2rem;
+        font-weight: 400;
+        opacity: 0.9;
+        line-height: 1.6;
+        max-width: 400px;
+      }
+    }
+    
+    .features {
+      margin-top: 3rem;
+      
+      .feature-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+        color: rgba(255, 255, 255, 0.9);
+        
+        .feature-icon {
+          width: 20px;
+          height: 20px;
+          margin-right: 1rem;
+          background: rgba(255, 255, 255, 0.2);
+          border-radius: 50%;
+          @include flex-center;
+          font-size: 0.8rem;
+        }
+        
+        .feature-text {
+          font-size: 0.95rem;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+  
+  // Right side - Login form
+  .right-section {
+    flex: 0 0 500px;
+    background: $bg-primary;
+    @include flex-center;
+    padding: 2rem;
+    position: relative;
+    z-index: 2;
+    box-shadow: -10px 0 50px rgba(0, 0, 0, 0.1);
+    
+    .login-form-container {
+      width: 100%;
+      max-width: 400px;
+      
+      .login-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        
+        .login-icon {
+          width: 80px;
+          height: 80px;
+          background: linear-gradient(135deg, $primary-color, $secondary-color);
+          border-radius: 50%;
+          @include flex-center;
+          margin: 0 auto 1.5rem;
+          color: white;
+          font-size: 2rem;
+          box-shadow: $shadow-lg;
+        }
+        
+        .login-title {
+          font-size: 2rem;
+          font-weight: 700;
+          color: $text-primary;
+          margin-bottom: 0.5rem;
+        }
+        
+        .login-subtitle {
+          font-size: 1rem;
+          color: $text-secondary;
+          font-weight: 400;
+        }
+      }
+      
+      .login-form {
+        .form-group {
+          margin-bottom: 1.5rem;
+          
+          .form-label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: $text-primary;
+            margin-bottom: 0.5rem;
+          }
+          
+          .form-input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid $border-color;
+            border-radius: $border-radius;
+            font-size: 1rem;
+            font-weight: 400;
+            color: $text-primary;
+            background: $bg-primary;
+            @include transition(border-color);
+            box-sizing: border-box;
+            
+            &::placeholder {
+              color: $text-light;
+            }
+            
+            &:focus {
+              @include input-focus;
+            }
+            
+            &.error {
+              border-color: $error-color;
+              box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+            }
+          }
+        }
+        
+        .error-message {
+          background: rgba(220, 38, 38, 0.1);
+          border: 1px solid rgba(220, 38, 38, 0.2);
+          color: $error-color;
+          padding: 0.75rem 1rem;
+          border-radius: $border-radius;
+          font-size: 0.9rem;
+          margin-bottom: 1.5rem;
+          display: flex;
+          align-items: center;
+          
+          &::before {
+            content: '⚠️';
+            margin-right: 0.5rem;
+          }
+        }
+        
+        .forgot-password {
+          text-align: right;
+          margin-bottom: 2rem;
+          
+          a {
+            color: $primary-color;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            @include transition(color);
+            
+            &:hover {
+              color: $primary-hover;
+              text-decoration: underline;
+            }
+          }
+        }
+        
+        .login-button {
+          width: 100%;
+          padding: 1rem;
+          background: linear-gradient(135deg, $primary-color, $secondary-color);
+          color: white;
+          border: none;
+          border-radius: $border-radius;
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          @include transition(all);
+          box-shadow: $shadow-md;
+          position: relative;
+          overflow: hidden;
+          
+          &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            @include transition(left, 0.5s);
+          }
+          
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: $shadow-xl;
+            
+            &::before {
+              left: 100%;
+            }
+          }
+          
+          &:active {
+            transform: translateY(0);
+            box-shadow: $shadow-md;
+          }
+          
+          &:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            
+            &:hover {
+              transform: none;
+              box-shadow: $shadow-md;
+            }
+          }
+        }
+        
+        .signup-link {
+          text-align: center;
+          margin-top: 2rem;
+          padding-top: 2rem;
+          border-top: 1px solid $border-color;
+          color: $text-secondary;
+          font-size: 0.9rem;
+          
+          a {
+            color: $primary-color;
+            text-decoration: none;
+            font-weight: 600;
+            @include transition(color);
+            
+            &:hover {
+              color: $primary-hover;
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Loading state
+.login-loading {
+  .login-button {
+    position: relative;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      margin: -10px 0 0 -10px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top: 2px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    span {
+      opacity: 0;
+    }
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Responsive design
+@media (max-width: 1024px) {
+  .login-container {
+    .left-section {
+      flex: 0 0 40%;
+      
+      .healthcare-illustration {
+        height: 300px;
+      }
+      
+      .brand-title {
+        font-size: 2rem;
+      }
+      
+      .features {
+        display: none;
+      }
+    }
+    
+    .right-section {
+      flex: 0 0 60%;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+    
+    .left-section {
+      flex: 0 0 300px;
+      padding: 1.5rem;
+      
+      // .healthcare-illustration {
+      //   height: 80px;
+      //   margin-bottom: 0.5rem;
+      // }
+      
+      .branding {
+        .brand-logo {
+          width: 100px;
+          max-height: 70px;
+          margin-bottom: 1.2rem;
+          padding: 0.4rem;
+        }
+      }
+      
+      .brand-title {
+        font-size: 1.8rem;
+      }
+      
+      .brand-subtitle {
+        font-size: 1rem;
+      }
+    }
+    
+    .right-section {
+      flex: 1;
+      padding: 1.5rem;
+      box-shadow: none;
+      
+      .login-form-container {
+        max-width: none;
+        
+        .login-header {
+          margin-bottom: 2rem;
+          
+          .login-icon {
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+          }
+          
+          .login-title {
+            font-size: 1.5rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .login-container {
+    .left-section {
+      flex: 0 0 250px;
+      padding: 1rem;
+      
+      // .healthcare-illustration {
+      //   height: 60px;
+      //   margin-bottom: 0.5rem;
+      // }
+      
+      .branding {
+        .brand-logo {
+          width: 80px;
+          max-height: 60px;
+          margin-bottom: 1rem;
+          padding: 0.3rem;
+        }
+      }
+      
+      .brand-title {
+        font-size: 1.5rem;
+      }
+      
+      .brand-subtitle {
+        font-size: 0.9rem;
+      }
+    }
+    
+    .right-section {
+      padding: 1rem;
+      
+      .login-form-container {
+        .form-group {
+          margin-bottom: 1rem;
+        }
+        
+        .login-header {
+          margin-bottom: 1.5rem;
+        }
+      }
+    }
+  }
+}

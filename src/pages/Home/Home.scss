@@ -1,0 +1,793 @@
+// Home Page SCSS - Healthcare Dashboard
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+// Healthcare color palette
+$primary-blue: #2563eb;
+$primary-green: #059669;
+$primary-teal: #0ea5e9;
+$accent-purple: #7c3aed;
+$accent-pink: #ec4899;
+$accent-orange: #f59e0b;
+$error-color: #dc2626;
+
+$bg-primary: #ffffff;
+$bg-secondary: #f8fafc;
+$bg-card: #ffffff;
+$bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+$text-primary: #1f2937;
+$text-secondary: #6b7280;
+$text-light: #9ca3af;
+$text-white: #ffffff;
+
+$border-color: #e5e7eb;
+$border-radius: 12px;
+$border-radius-lg: 16px;
+
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin transition($property: all, $duration: 0.3s, $timing: ease-out) {
+  transition: $property $duration $timing;
+}
+
+@mixin card-hover {
+  @include transition(all, 0.2s);
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-xl;
+  }
+}
+
+// Main container
+.home-container {
+  min-height: 100vh;
+  background: $bg-secondary;
+  font-family: 'Inter', sans-serif;
+
+  // Hero section
+  .hero-section {
+    background: $bg-gradient;
+    color: $text-white;
+    padding: 4rem 2rem 2rem;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><pattern id="healthPattern" x="0" y="0" width="120" height="120" patternUnits="userSpaceOnUse"><circle cx="60" cy="60" r="3" fill="rgba(255,255,255,0.1)"/><path d="M50 50h20v4h-20zm4 4v20h4v-20z" fill="rgba(255,255,255,0.08)"/><circle cx="30" cy="30" r="1.5" fill="rgba(255,255,255,0.06)"/><circle cx="90" cy="90" r="1.5" fill="rgba(255,255,255,0.06)"/></pattern></defs><rect width="100%" height="100%" fill="url(%23healthPattern)"/></svg>') repeat;
+      opacity: 0.4;
+      z-index: 1;
+    }
+
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+      text-align: center;
+
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(255, 255, 255, 0.15);
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        margin-bottom: 1.5rem;
+        backdrop-filter: blur(10px);
+
+        .badge-icon {
+          font-size: 1.2rem;
+        }
+      }
+
+      .hero-title {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        line-height: 1.2;
+        background: linear-gradient(45deg, #ffffff, #e0f2fe);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+
+        .highlight {
+          color: #fbbf24;
+          -webkit-text-fill-color: #fbbf24;
+        }
+      }
+
+      .hero-subtitle {
+        font-size: 1.25rem;
+        font-weight: 400;
+        opacity: 0.9;
+        line-height: 1.6;
+        max-width: 800px;
+        margin: 0 auto 2rem;
+      }
+
+      .hero-features {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+        margin-top: 2rem;
+
+        .feature-item {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          background: rgba(255, 255, 255, 0.1);
+          padding: 0.75rem 1.5rem;
+          border-radius: 12px;
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+
+          .feature-icon {
+            font-size: 1.5rem;
+          }
+
+          .feature-text {
+            font-weight: 500;
+            font-size: 0.95rem;
+          }
+        }
+      }
+    }
+  }
+
+  // Dashboard content
+  .dashboard-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+
+    // Welcome section
+    .welcome-section {
+      background: $bg-card;
+      border-radius: $border-radius-lg;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: $shadow-md;
+      border: 1px solid $border-color;
+
+      .welcome-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+
+        .welcome-text {
+          h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: $text-primary;
+            margin-bottom: 0.5rem;
+          }
+
+          p {
+            color: $text-secondary;
+            font-size: 1rem;
+          }
+        }
+
+        .user-avatar {
+          width: 60px;
+          height: 60px;
+          background: $bg-gradient;
+          border-radius: 50%;
+          @include flex-center;
+          color: $text-white;
+          font-size: 1.5rem;
+          font-weight: 600;
+        }
+      }
+
+      .health-summary {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-top: 1.5rem;
+
+        .summary-card {
+          background: $bg-secondary;
+          padding: 1rem;
+          border-radius: $border-radius;
+          text-align: center;
+
+          .summary-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+          }
+
+          .summary-label {
+            font-size: 0.8rem;
+            color: $text-secondary;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+          }
+
+          .summary-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: $text-primary;
+          }
+        }
+      }
+    }
+
+    // Tab navigation
+    .health-tabs {
+      background: $bg-card;
+      border-radius: $border-radius-lg;
+      box-shadow: $shadow-md;
+      border: 1px solid $border-color;
+      overflow: hidden;
+
+      .tabs-header {
+        display: flex;
+        border-bottom: 1px solid $border-color;
+        background: $bg-secondary;
+
+        .tab-button {
+          flex: 1;
+          padding: 1rem 1.5rem;
+          border: none;
+          background: transparent;
+          cursor: pointer;
+          font-weight: 600;
+          font-size: 0.95rem;
+          color: $text-secondary;
+          @include transition(all, 0.2s);
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+
+          .tab-icon {
+            font-size: 1.2rem;
+          }
+
+          &.active {
+            color: $primary-blue;
+            background: $bg-card;
+
+            &::after {
+              content: '';
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              right: 0;
+              height: 3px;
+              background: $primary-blue;
+            }
+          }
+
+          &:hover:not(.active) {
+            color: $text-primary;
+            background: rgba(37, 99, 235, 0.05);
+          }
+        }
+      }
+
+      .tab-content {
+        padding: 2rem;
+        min-height: 400px;
+
+        .tab-panel {
+          display: none;
+
+          &.active {
+            display: block;
+            animation: fadeInUp 0.3s ease-out;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Tab content styles
+.tab-content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.content-card {
+  background: $bg-secondary;
+  border-radius: $border-radius;
+  padding: 1.5rem;
+  border: 1px solid $border-color;
+  @include card-hover;
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+
+    .card-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: $border-radius;
+      @include flex-center;
+      font-size: 1.5rem;
+      color: $text-white;
+
+      &.reports { background: linear-gradient(135deg, $primary-blue, $primary-teal); }
+      &.health { background: linear-gradient(135deg, $primary-green, $primary-teal); }
+      &.doctors { background: linear-gradient(135deg, $accent-purple, $primary-blue); }
+      &.medicines { background: linear-gradient(135deg, $accent-pink, $accent-purple); }
+      &.diagnostics { background: linear-gradient(135deg, $accent-orange, $accent-pink); }
+      &.feed { background: linear-gradient(135deg, $primary-teal, $primary-green); }
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: $text-primary;
+      margin-bottom: 0.25rem;
+    }
+
+    .card-subtitle {
+      font-size: 0.85rem;
+      color: $text-secondary;
+    }
+  }
+
+  .card-content {
+    color: $text-secondary;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .card-action {
+    .action-button {
+      background: transparent;
+      border: 2px solid $primary-blue;
+      color: $primary-blue;
+      padding: 0.5rem 1rem;
+      border-radius: $border-radius;
+      font-weight: 600;
+      cursor: pointer;
+      @include transition(all, 0.2s);
+
+      &:hover {
+        background: $primary-blue;
+        color: $text-white;
+      }
+    }
+  }
+}
+
+// Feature list styling
+.feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid $border-color;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .feature-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      @include flex-center;
+      background: $bg-secondary;
+      color: $primary-blue;
+      font-size: 0.9rem;
+    }
+
+    .feature-text {
+      flex: 1;
+      color: $text-secondary;
+      font-size: 0.9rem;
+    }
+
+    .feature-status {
+      padding: 0.25rem 0.5rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+
+      &.available {
+        background: rgba(5, 150, 105, 0.1);
+        color: $primary-green;
+      }
+
+      &.coming-soon {
+        background: rgba(245, 158, 11, 0.1);
+        color: $accent-orange;
+      }
+    }
+  }
+}
+
+// File Upload Styles
+.upload-card {
+  .upload-section {
+    padding: 0;
+    
+    .upload-dropzone {
+      border: 2px dashed $border-color;
+      border-radius: $border-radius;
+      padding: 2rem;
+      margin-bottom: 1rem;
+      cursor: pointer;
+      @include transition(all, 0.2s);
+      background: $bg-secondary;
+      min-height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      &:hover {
+        border-color: $primary-blue;
+        background: rgba(37, 99, 235, 0.02);
+      }
+      
+      &.drag-active {
+        border-color: $primary-blue;
+        background: rgba(37, 99, 235, 0.05);
+        transform: scale(1.02);
+      }
+      
+      &.has-file {
+        border-color: $primary-green;
+        background: rgba(5, 150, 105, 0.05);
+      }
+      
+      .upload-content {
+        width: 100%;
+        text-align: center;
+      }
+      
+      .upload-placeholder {
+        .upload-icon {
+          font-size: 3rem;
+          margin-bottom: 1rem;
+          opacity: 0.6;
+        }
+        
+        .upload-text {
+          .primary-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: $text-primary;
+            margin-bottom: 0.5rem;
+          }
+          
+          .secondary-text {
+            font-size: 0.9rem;
+            color: $text-secondary;
+          }
+        }
+      }
+      
+      .file-preview {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem;
+        background: $bg-card;
+        border-radius: $border-radius;
+        border: 1px solid $border-color;
+        
+        .file-icon {
+          font-size: 2rem;
+          margin-right: 1rem;
+        }
+        
+        .file-info {
+          flex: 1;
+          text-align: left;
+          
+          .file-name {
+            font-weight: 600;
+            color: $text-primary;
+            margin-bottom: 0.25rem;
+            word-break: break-word;
+          }
+          
+          .file-size {
+            font-size: 0.85rem;
+            color: $text-secondary;
+          }
+        }
+        
+        .remove-file {
+          background: $error-color;
+          color: white;
+          border: none;
+          border-radius: 50%;
+          width: 24px;
+          height: 24px;
+          cursor: pointer;
+          font-size: 0.8rem;
+          @include transition(all, 0.2s);
+          
+          &:hover {
+            background: darken($error-color, 10%);
+            transform: scale(1.1);
+          }
+        }
+      }
+    }
+    
+    .upload-progress {
+      margin-bottom: 1rem;
+      
+      .progress-bar {
+        width: 100%;
+        height: 8px;
+        background: $bg-secondary;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 0.5rem;
+        
+        .progress-fill {
+          height: 100%;
+          background: linear-gradient(90deg, $primary-blue, $primary-teal);
+          border-radius: 4px;
+          @include transition(width, 0.3s);
+        }
+      }
+      
+      .progress-text {
+        font-size: 0.85rem;
+        color: $text-secondary;
+        text-align: center;
+      }
+    }
+    
+    .upload-message {
+      padding: 0.75rem;
+      border-radius: $border-radius;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      
+      &.success {
+        background: rgba(5, 150, 105, 0.1);
+        color: $primary-green;
+        border: 1px solid rgba(5, 150, 105, 0.2);
+      }
+      
+      &.error {
+        background: rgba(220, 38, 38, 0.1);
+        color: $error-color;
+        border: 1px solid rgba(220, 38, 38, 0.2);
+      }
+    }
+    
+    .upload-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+      
+      .upload-button {
+        background: linear-gradient(135deg, $primary-blue, $primary-teal);
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: $border-radius;
+        font-weight: 600;
+        cursor: pointer;
+        @include transition(all, 0.2s);
+        
+        &:hover:not(:disabled) {
+          transform: translateY(-2px);
+          box-shadow: $shadow-lg;
+        }
+        
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+          transform: none;
+        }
+      }
+      
+      .reset-button {
+        background: transparent;
+        color: $text-secondary;
+        border: 2px solid $border-color;
+        padding: 0.75rem 1.5rem;
+        border-radius: $border-radius;
+        font-weight: 600;
+        cursor: pointer;
+        @include transition(all, 0.2s);
+        
+        &:hover {
+          color: $text-primary;
+          border-color: $text-primary;
+        }
+      }
+    }
+  }
+}
+
+// Animations
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .home-container {
+    .hero-section {
+      padding: 2rem 1rem 1rem;
+
+      .hero-content {
+        .hero-title {
+          font-size: 2rem;
+        }
+
+        .hero-subtitle {
+          font-size: 1rem;
+        }
+
+        .hero-features {
+          gap: 1rem;
+
+          .feature-item {
+            flex-direction: column;
+            text-align: center;
+            gap: 0.5rem;
+          }
+        }
+      }
+    }
+
+    .dashboard-content {
+      padding: 1rem;
+
+      .welcome-section {
+        padding: 1.5rem;
+
+        .welcome-header {
+          flex-direction: column;
+          text-align: center;
+          gap: 1rem;
+        }
+      }
+
+      .health-tabs {
+        .tabs-header {
+          flex-wrap: wrap;
+
+          .tab-button {
+            flex: 1 1 150px;
+            min-width: 120px;
+          }
+        }
+      }
+    }
+
+    .tab-content-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    // Mobile upload styles
+    .upload-card {
+      .upload-section {
+        .upload-dropzone {
+          padding: 1.5rem 1rem;
+          min-height: 100px;
+          
+          .upload-placeholder {
+            .upload-icon {
+              font-size: 2.5rem;
+            }
+            
+            .upload-text {
+              .primary-text {
+                font-size: 1rem;
+              }
+              
+              .secondary-text {
+                font-size: 0.8rem;
+              }
+            }
+          }
+          
+          .file-preview {
+            padding: 0.75rem;
+            flex-direction: column;
+            text-align: center;
+            gap: 0.5rem;
+            
+            .file-icon {
+              margin-right: 0;
+              margin-bottom: 0.5rem;
+            }
+            
+            .file-info {
+              text-align: center;
+            }
+          }
+        }
+        
+        .upload-actions {
+          flex-direction: column;
+          gap: 0.5rem;
+          
+          .upload-button,
+          .reset-button {
+            padding: 0.75rem;
+            font-size: 0.9rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .home-container {
+    .hero-section {
+      .hero-content {
+        .hero-title {
+          font-size: 1.75rem;
+        }
+
+        .hero-features {
+          .feature-item {
+            padding: 0.5rem 1rem;
+          }
+        }
+      }
+    }
+
+    .health-tabs {
+      .tabs-header {
+        .tab-button {
+          padding: 0.75rem 0.5rem;
+          font-size: 0.85rem;
+          flex-direction: column;
+          gap: 0.25rem;
+
+          .tab-icon {
+            font-size: 1rem;
+          }
+        }
+      }
+    }
+  }
+}
