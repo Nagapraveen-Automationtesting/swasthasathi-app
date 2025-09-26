@@ -1,5 +1,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { logout as logoutService } from '../utils/network';
+import { getUserFromToken, getAccessToken } from '../utils/auth';
+import { logger } from '../utils/logger';
 
 const AuthContext = createContext();
 
@@ -9,7 +11,26 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
-    if (storedUser) setUser(JSON.parse(storedUser));
+    if (storedUser) {
+      const userData = JSON.parse(storedUser);
+      
+      // If userName is not in stored data, try to extract from token
+      if (!userData.userName) {
+        const accessToken = getAccessToken();
+        if (accessToken) {
+          const tokenUserData = getUserFromToken(accessToken);
+          if (tokenUserData?.userName) {
+            userData.userName = tokenUserData.userName;
+            userData.userId = tokenUserData.userId;
+            // Update stored data with extracted info
+            localStorage.setItem('user', JSON.stringify(userData));
+            logger.debug('Enhanced user data with token information');
+          }
+        }
+      }
+      
+      setUser(userData);
+    }
   }, []);
 
   const login = (userData) => {
@@ -20,20 +41,20 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       setIsLoggingOut(true);
-      console.log('🚪 Starting logout process...');
+      logger.auth('Starting logout process');
       
       // Call backend logout service (includes token invalidation)
       const result = await logoutService();
-      console.log('✅ Logout service result:', result);
+      logger.auth('Logout service completed', result);
       
       // Clear local state and storage (tokens already cleared in service)
       setUser(null);
       localStorage.removeItem('user');
       
-      console.log('✅ Local logout completed');
+      logger.success('Local logout completed');
       
     } catch (error) {
-      console.error('❌ Logout error:', error);
+      logger.error('Logout error', error.message);
       // Still clear local data even if server call fails
       setUser(null);
       localStorage.removeItem('user');

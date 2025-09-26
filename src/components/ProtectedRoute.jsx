@@ -1,6 +1,7 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { getAccessToken, getRefreshToken } from '../utils/auth';
+import { logger } from '../utils/logger';
 import { useEffect, useState } from 'react';
 
 export default function ProtectedRoute({ children }) {
@@ -15,33 +16,33 @@ export default function ProtectedRoute({ children }) {
         const accessToken = getAccessToken();
         const refreshToken = getRefreshToken();
         
-        console.log('🔐 Checking authentication...');
-        console.log('User:', !!user);
-        console.log('Access Token:', !!accessToken);
-        console.log('Refresh Token:', !!refreshToken);
+        logger.auth('Checking authentication status', {
+          hasUser: !!user,
+          hasAccessToken: !!accessToken,
+          hasRefreshToken: !!refreshToken
+        });
         
         // Check if we have both user data AND valid tokens
         if (user && accessToken && refreshToken) {
-          console.log('✅ Authentication valid');
+          logger.auth('Authentication valid');
           setIsAuthenticated(true);
         } else {
-          console.log('❌ Authentication invalid - missing data');
-          console.log('Missing:', {
-            user: !user,
-            accessToken: !accessToken,
-            refreshToken: !refreshToken
+          logger.warn('Authentication invalid - missing data', {
+            missingUser: !user,
+            missingAccessToken: !accessToken,
+            missingRefreshToken: !refreshToken
           });
           
           // Clear any incomplete auth state
           if (!user || !accessToken || !refreshToken) {
-            console.log('🧹 Clearing incomplete auth state...');
+            logger.auth('Clearing incomplete auth state');
             await logout();
           }
           
           setIsAuthenticated(false);
         }
       } catch (error) {
-        console.error('❌ Auth check error:', error);
+        logger.error('Auth check error', error.message);
         setIsAuthenticated(false);
       } finally {
         setIsChecking(false);
@@ -77,7 +78,7 @@ export default function ProtectedRoute({ children }) {
 
   // Redirect to login if not authenticated
   if (!isAuthenticated) {
-    console.log('🚪 Redirecting to login...');
+    logger.auth('Redirecting to login - authentication required');
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 

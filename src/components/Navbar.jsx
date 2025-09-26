@@ -57,6 +57,9 @@ export default function Navbar() {
 
   // Get user initials for avatar
   const getUserInitials = () => {
+    if (user?.userName) {
+      return user.userName.charAt(0).toUpperCase();
+    }
     if (user?.email) {
       return user.email.charAt(0).toUpperCase();
     }
@@ -90,7 +93,7 @@ export default function Navbar() {
               {getUserInitials()}
             </div>
             {/* <div className="user-info">
-              <span className="user-name">{user?.email?.split('@')[0] || 'User'}</span>
+              <span className="user-name">{user?.userName || user?.email?.split('@')[0] || 'User'}</span>
               <span className="user-role">Administrator</span>
             </div> */}
             <div className={`dropdown-arrow ${isDropdownOpen ? 'rotated' : ''}`}>
@@ -106,7 +109,7 @@ export default function Navbar() {
                   {getUserInitials()}
                 </div>
                 <div className="user-details">
-                  <div className="user-name-large">{user?.email?.split('@')[0] || 'User'}</div>
+                  <div className="user-name-large">{user?.userName || user?.email?.split('@')[0] || 'User'}</div>
                   <div className="user-email">{user?.email}</div>
                 </div>
               </div>

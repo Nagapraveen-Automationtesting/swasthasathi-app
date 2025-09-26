@@ -4,8 +4,8 @@ import Login from './pages/Login/Login';
 import Signup from './pages/Signup/Signup';
 import Reports from './pages/Reports/Reports';
 import ProtectedRoute from './components/ProtectedRoute';
-
 import Layout from './components/Layout';
+import { APP_BASE_PATH } from './assets/Constants';
 
 const router = createBrowserRouter([
   {
@@ -33,7 +33,7 @@ const router = createBrowserRouter([
   { path: '/login', element: <Login /> },
   { path: '/signup', element: <Signup /> },
 ], {
-  basename: '/webapp-peoplecost'
+  basename: APP_BASE_PATH
 });
 
 

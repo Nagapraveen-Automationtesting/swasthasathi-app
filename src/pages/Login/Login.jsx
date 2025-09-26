@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { login } from '../../utils/network';
-import { setAccessToken, setRefreshToken, setToken } from '../../utils/auth';
+import { setAccessToken, setRefreshToken, setToken, getUserFromToken } from '../../utils/auth';
+import { logger } from '../../utils/logger';
+import { APP_NAME } from '../../assets/Constants';
 import './Login.scss';
 import jhhLogoImage from '../../assets/images/logo.png'
 
@@ -20,36 +22,47 @@ export default function Login() {
     setIsLoading(true);
 
     try {
-      console.log("Email:", email);
+      logger.auth('Login attempt', { email });
       const data = await login(email, password);
       
-      console.log('📋 Login response:', data);
+      logger.auth('Login response received');
       
       // Store all tokens properly
       if (data.access_token) {
         setAccessToken(data.access_token);
         setToken(data.access_token); // For backward compatibility
-        console.log('✅ Access token stored');
+        logger.auth('Access token stored');
       }
       
       if (data.refresh_token) {
         setRefreshToken(data.refresh_token);
-        console.log('✅ Refresh token stored');
+        logger.auth('Refresh token stored');
       }
       
-      // Store user data with tokens
+      // Extract user information from token
+      const tokenUserData = getUserFromToken(data.access_token);
+      
+      // Store user data with tokens and user info from token
       const userData = { 
         email,
+        userName: tokenUserData?.userName,
+        userId: tokenUserData?.userId,
         access_token: data.access_token,
         refresh_token: data.refresh_token,
         ...data 
       };
       
+      logger.debug('User data prepared for storage', { 
+        email: userData.email, 
+        userName: userData.userName,
+        userId: userData.userId 
+      });
+      
       setUser(userData);
-      console.log('✅ User logged in successfully');
+      logger.success('User logged in successfully');
       navigate('/');
     } catch (err) {
-      console.error('❌ Login error:', err);
+      logger.error('Login error', err.message);
       setErrorMsg(err.message || 'Login failed');
     } finally {
       setIsLoading(false);
@@ -62,7 +75,7 @@ export default function Login() {
       <div className="left-section">
         <div className="branding">
           <img src={jhhLogoImage} alt="JHH Analytics Logo" className="brand-logo"/>
-          <h1 className="brand-title">JHH Analytics</h1>
+          <h1 className="brand-title">{APP_NAME}</h1>
           <p className="brand-subtitle">
             Streamline your healthcare workforce management with intelligent cost tracking and analytics
           </p>
@@ -150,7 +163,7 @@ export default function Login() {
             </button>
 
             <div className="signup-link">
-              Don't have an account? <a href="/webapp-peoplecost/signup">Sign up here</a>
+              Don't have an account? <Link to="/signup">Sign up here</Link>
             </div>
           </form>
         </div>

@@ -1,7 +1,9 @@
 import { useAuth } from '../../contexts/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 import React, { useState, useRef } from 'react';
-import { uploadFileComplete, uploadFileViaBackend, validateFile } from '../../utils/network';
+import { uploadFileViaBackend } from '../../utils/network';
+import { validateFile } from '../../utils/fileUtils';
+import { logger } from '../../utils/logger';
 import './Home.scss';
 
 export default function Home() {
@@ -16,9 +18,14 @@ export default function Home() {
   const [isDragActive, setIsDragActive] = useState(false);
   const fileInputRef = useRef(null);
 
-  const getUserInitials = (email) => {
-    if (!email) return 'U';
-    return email.charAt(0).toUpperCase();
+  const getUserInitials = (user) => {
+    if (user?.userName) {
+      return user.userName.charAt(0).toUpperCase();
+    }
+    if (user?.email) {
+      return user.email.charAt(0).toUpperCase();
+    }
+    return 'U';
   };
 
   const tabs = [
@@ -91,15 +98,10 @@ export default function Home() {
     setUploadMessage('Preparing upload...');
 
     try {
-      const result = await uploadFileComplete(uploadFile, (progress) => {
+      logger.upload('Starting file upload via backend service', { filename: uploadFile.name });
+      const result = await uploadFileViaBackend(uploadFile, (progress) => {
         setUploadProgress(progress);
-        if (progress < 20) {
-          setUploadMessage('Getting upload URL...');
-        } else if (progress < 90) {
-          setUploadMessage(`Uploading... ${Math.round(progress)}%`);
-        } else {
-          setUploadMessage('Confirming upload...');
-        }
+        setUploadMessage(`Uploading... ${Math.round(progress)}%`);
       });
 
       setUploadStatus('success');
@@ -107,44 +109,15 @@ export default function Home() {
       setUploadFile(null);
       setUploadProgress(100);
       
+      logger.success('File upload completed successfully');
+      
       // Reset file input
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
       }
 
     } catch (error) {
-      // Check if this is a CORS error and try backend upload as fallback
-      if (error.message.includes('CORS') || error.message.includes('blocked by CORS policy') || error.message.includes('network error')) {
-        console.log('🔄 CORS error detected, trying backend proxy upload...');
-        setUploadMessage('⚠️ Direct upload blocked, trying alternative method...');
-        
-        try {
-          const result = await uploadFileViaBackend(uploadFile, (progress) => {
-            setUploadProgress(progress);
-            setUploadMessage(`Uploading via backend... ${Math.round(progress)}%`);
-          });
-
-          setUploadStatus('success');
-          setUploadMessage(`✅ ${result.message} (${result.fileSize}) - via backend`);
-          setUploadFile(null);
-          setUploadProgress(100);
-          
-          // Reset file input
-          if (fileInputRef.current) {
-            fileInputRef.current.value = '';
-          }
-          return; // Exit successfully
-          
-        } catch (backendError) {
-          console.error('❌ Backend upload also failed:', backendError);
-          setUploadStatus('error');
-          setUploadMessage(`❌ Upload failed: ${backendError.message}. Both direct and backend uploads failed.`);
-          setUploadProgress(0);
-          return;
-        }
-      }
-      
-      // Handle non-CORS errors
+      logger.error('File upload via backend service failed', error.message);
       setUploadStatus('error');
       setUploadMessage(`❌ Upload failed: ${error.message}`);
       setUploadProgress(0);
@@ -529,11 +502,11 @@ export default function Home() {
         <section className="welcome-section">
           <div className="welcome-header">
             <div className="welcome-text">
-              <h2>Welcome back, {user?.email || 'User'}!</h2>
+              <h2>Welcome back, {user?.userName || user?.email || 'User'}!</h2>
               <p>Here's your personalized health dashboard with AI-powered insights</p>
             </div>
             <div className="user-avatar">
-              {getUserInitials(user?.email)}
+              {getUserInitials(user)}
             </div>
           </div>
 
