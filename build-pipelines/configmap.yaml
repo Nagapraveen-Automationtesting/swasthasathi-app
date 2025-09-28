@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: swasthasathi-app-config
+  namespace: swasthasathi
+  labels:
+    app: swasthasathi-app
+data:
+  # Application configuration
+  NODE_ENV: "production"
+  VITE_APP_BASE_PATH: "/swasthasathi-app/"
+  
+  # Nginx configuration can be mounted if needed
+  # nginx.conf: |
+  #   ... your nginx configuration here if you want to override the one in Docker image
+---

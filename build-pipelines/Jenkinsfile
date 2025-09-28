@@ -1,0 +1,283 @@
+pipeline {
+    agent any
+    
+    environment {
+        // Docker registry configuration
+        DOCKER_REGISTRY = credentials('docker-registry-url') // Configure in Jenkins credentials
+        DOCKER_REPO = 'swasthasathi-app'
+        IMAGE_NAME = "${DOCKER_REGISTRY}/${DOCKER_REPO}"
+        IMAGE_TAG = "${BUILD_NUMBER}"
+        FULL_IMAGE_NAME = "${IMAGE_NAME}:${IMAGE_TAG}"
+        
+        // Kubernetes configuration
+        KUBECONFIG = credentials('kubeconfig') // Configure in Jenkins credentials
+        NAMESPACE = 'swasthasathi'
+        
+        // Application configuration
+        NODE_VERSION = '18'
+    }
+    
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+        timeout(time: 30, unit: 'MINUTES')
+        timestamps()
+    }
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    echo "🔄 Checking out source code..."
+                    checkout scm
+                    
+                    // Get Git commit info
+                    env.GIT_COMMIT = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
+                    env.GIT_SHORT_COMMIT = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
+                    env.GIT_BRANCH = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
+                    
+                    echo "📋 Build Info:"
+                    echo "  - Build Number: ${BUILD_NUMBER}"
+                    echo "  - Git Commit: ${env.GIT_SHORT_COMMIT}"
+                    echo "  - Git Branch: ${env.GIT_BRANCH}"
+                }
+            }
+        }
+        
+        stage('Install Dependencies & Build') {
+            steps {
+                script {
+                    echo "📦 Installing dependencies and building application..."
+                    sh '''
+                        # Install Node.js dependencies
+                        npm ci --ignore-scripts
+                        
+                        # Run linting
+                        npm run lint
+                        
+                        # Build the application
+                        npm run build
+                        
+                        # Verify build output
+                        if [ ! -d "dist" ]; then
+                            echo "❌ Build failed - dist directory not found"
+                            exit 1
+                        fi
+                        
+                        echo "✅ Build completed successfully"
+                        ls -la dist/
+                    '''
+                }
+            }
+            post {
+                always {
+                    // Archive build artifacts
+                    archiveArtifacts artifacts: 'dist/**/*', allowEmptyArchive: true
+                }
+            }
+        }
+        
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    echo "🐳 Building Docker image..."
+                    sh """
+                        docker build \\
+                            --tag ${FULL_IMAGE_NAME} \\
+                            --tag ${IMAGE_NAME}:latest \\
+                            --label "build.number=${BUILD_NUMBER}" \\
+                            --label "git.commit=${env.GIT_COMMIT}" \\
+                            --label "git.branch=${env.GIT_BRANCH}" \\
+                            --label "build.date=\$(date -u +'%Y-%m-%dT%H:%M:%SZ')" \\
+                            .
+                        
+                        echo "✅ Docker image built successfully"
+                        docker images | grep ${DOCKER_REPO}
+                    """
+                }
+            }
+        }
+        
+        stage('Security Scan') {
+            steps {
+                script {
+                    echo "🔒 Running security scans..."
+                    sh """
+                        # Docker image vulnerability scan (if trivy is installed)
+                        if command -v trivy &> /dev/null; then
+                            echo "Running Trivy security scan..."
+                            trivy image --exit-code 0 --severity HIGH,CRITICAL ${FULL_IMAGE_NAME}
+                        else
+                            echo "⚠️  Trivy not installed, skipping security scan"
+                        fi
+                        
+                        # Basic Docker security check
+                        echo "Checking Docker image configuration..."
+                        docker inspect ${FULL_IMAGE_NAME} | jq '.[0].Config.User' | grep -q "1001" && echo "✅ Running as non-root user" || echo "❌ Not running as non-root user"
+                    """
+                }
+            }
+        }
+        
+        stage('Push to Registry') {
+            steps {
+                script {
+                    echo "📤 Pushing Docker image to registry..."
+                    withCredentials([usernamePassword(credentialsId: 'docker-registry-credentials', usernameVariable: 'REGISTRY_USER', passwordVariable: 'REGISTRY_PASS')]) {
+                        sh """
+                            # Login to Docker registry
+                            echo \$REGISTRY_PASS | docker login ${DOCKER_REGISTRY} -u \$REGISTRY_USER --password-stdin
+                            
+                            # Push images
+                            docker push ${FULL_IMAGE_NAME}
+                            docker push ${IMAGE_NAME}:latest
+                            
+                            echo "✅ Docker image pushed successfully"
+                        """
+                    }
+                }
+            }
+        }
+        
+        stage('Update Kubernetes Manifests') {
+            steps {
+                script {
+                    echo "📝 Updating Kubernetes manifests..."
+                    dir('build-pipelines') {
+                        sh """
+                            # Update image tag in kustomization.yaml
+                            sed -i 's|newTag: .*|newTag: ${IMAGE_TAG}|g' kustomization.yaml
+                            
+                            # Update image name if needed
+                            sed -i 's|name: swasthasathi-app|name: ${IMAGE_NAME}|g' kustomization.yaml
+                            
+                            echo "📋 Updated manifests:"
+                            cat kustomization.yaml | grep -A 2 "images:"
+                        """
+                    }
+                }
+            }
+        }
+        
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    echo "🚀 Deploying to Kubernetes..."
+                    withKubeConfig([credentialsId: 'kubeconfig']) {
+                        dir('build-pipelines') {
+                            sh """
+                                # Verify kubectl connectivity
+                                kubectl cluster-info
+                                
+                                # Create namespace if it doesn't exist
+                                kubectl create namespace ${NAMESPACE} --dry-run=client -o yaml | kubectl apply -f -
+                                
+                                # Apply manifests using kustomize
+                                kubectl apply -k .
+                                
+                                # Wait for deployment to be ready
+                                echo "⏳ Waiting for deployment to be ready..."
+                                kubectl rollout status deployment/swasthasathi-app -n ${NAMESPACE} --timeout=300s
+                                
+                                # Verify deployment
+                                echo "✅ Deployment Status:"
+                                kubectl get pods -n ${NAMESPACE} -l app=swasthasathi-app
+                                kubectl get services -n ${NAMESPACE} -l app=swasthasathi-app
+                                kubectl get ingress -n ${NAMESPACE}
+                            """
+                        }
+                    }
+                }
+            }
+        }
+        
+        stage('Health Check') {
+            steps {
+                script {
+                    echo "🏥 Running post-deployment health checks..."
+                    withKubeConfig([credentialsId: 'kubeconfig']) {
+                        sh """
+                            # Wait for pods to be ready
+                            kubectl wait --for=condition=ready pod -l app=swasthasathi-app -n ${NAMESPACE} --timeout=180s
+                            
+                            # Test health endpoint using port-forward
+                            echo "Testing health endpoint..."
+                            kubectl port-forward -n ${NAMESPACE} service/swasthasathi-app-service 8080:80 &
+                            PF_PID=\$!
+                            sleep 5
+                            
+                            # Test health endpoint
+                            if curl -f http://localhost:8080/health; then
+                                echo "✅ Health check passed"
+                            else
+                                echo "❌ Health check failed"
+                                exit 1
+                            fi
+                            
+                            # Clean up port-forward
+                            kill \$PF_PID || true
+                        """
+                    }
+                }
+            }
+        }
+    }
+    
+    post {
+        always {
+            script {
+                echo "🧹 Cleaning up..."
+                // Clean up local Docker images to save space
+                sh """
+                    docker rmi ${FULL_IMAGE_NAME} || true
+                    docker rmi ${IMAGE_NAME}:latest || true
+                    docker system prune -f || true
+                """
+            }
+        }
+        
+        success {
+            script {
+                echo "🎉 Pipeline completed successfully!"
+                echo "🔗 Application URL: https://swasthasathi.yourdomain.com"
+                
+                // Send success notification (configure as needed)
+                // slackSend(
+                //     channel: '#deployments',
+                //     color: 'good',
+                //     message: "✅ Swasthasathi App deployed successfully!\nBuild: ${BUILD_NUMBER}\nCommit: ${env.GIT_SHORT_COMMIT}\nBranch: ${env.GIT_BRANCH}"
+                // )
+            }
+        }
+        
+        failure {
+            script {
+                echo "❌ Pipeline failed!"
+                
+                // Get failure details
+                withKubeConfig([credentialsId: 'kubeconfig']) {
+                    sh """
+                        echo "🔍 Debugging information:"
+                        kubectl get pods -n ${NAMESPACE} -l app=swasthasathi-app || true
+                        kubectl describe pods -n ${NAMESPACE} -l app=swasthasathi-app || true
+                        kubectl logs -n ${NAMESPACE} -l app=swasthasathi-app --tail=50 || true
+                    """
+                }
+                
+                // Send failure notification (configure as needed)
+                // slackSend(
+                //     channel: '#deployments',
+                //     color: 'danger',
+                //     message: "❌ Swasthasathi App deployment failed!\nBuild: ${BUILD_NUMBER}\nCommit: ${env.GIT_SHORT_COMMIT}\nBranch: ${env.GIT_BRANCH}"
+                // )
+            }
+        }
+        
+        unstable {
+            echo "⚠️  Pipeline completed with warnings"
+        }
+        
+        aborted {
+            echo "🛑 Pipeline was aborted"
+        }
+    }
+}

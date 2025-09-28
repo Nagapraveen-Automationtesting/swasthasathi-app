@@ -1,0 +1,55 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: swasthasathi-app-ingress
+  namespace: swasthasathi
+  labels:
+    app: swasthasathi-app
+  annotations:
+    # Nginx ingress controller annotations
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    
+    # Security headers (complementing nginx.conf)
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      more_set_headers "X-Frame-Options: SAMEORIGIN";
+      more_set_headers "X-Content-Type-Options: nosniff";
+      more_set_headers "X-XSS-Protection: 1; mode=block";
+      more_set_headers "Referrer-Policy: no-referrer-when-downgrade";
+    
+    # CORS if needed for API calls
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, OPTIONS"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization"
+    
+    # Rate limiting
+    nginx.ingress.kubernetes.io/rate-limit-requests-per-second: "10"
+    nginx.ingress.kubernetes.io/rate-limit-burst-multiplier: "5"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - swasthasathi.yourdomain.com  # Replace with your actual domain
+    secretName: swasthasathi-app-tls-secret
+  rules:
+  - host: swasthasathi.yourdomain.com  # Replace with your actual domain
+    http:
+      paths:
+      - path: /swasthasathi-app
+        pathType: Prefix
+        backend:
+          service:
+            name: swasthasathi-app-service
+            port:
+              number: 80
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: swasthasathi-app-service
+            port:
+              number: 80
+---

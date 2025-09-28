@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: swasthasathi-app-service
+  namespace: swasthasathi
+  labels:
+    app: swasthasathi-app
+    service: swasthasathi-app-service
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 5000
+    protocol: TCP
+    name: http
+  selector:
+    app: swasthasathi-app
+---
+# LoadBalancer service for external access (optional - use if you need external access)
+apiVersion: v1
+kind: Service
+metadata:
+  name: swasthasathi-app-loadbalancer
+  namespace: swasthasathi
+  labels:
+    app: swasthasathi-app
+    service: swasthasathi-app-loadbalancer
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 5000
+    protocol: TCP
+    name: http
+  - port: 443
+    targetPort: 5000
+    protocol: TCP
+    name: https
+  selector:
+    app: swasthasathi-app
+---

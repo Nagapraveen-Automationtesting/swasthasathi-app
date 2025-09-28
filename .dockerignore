@@ -1,0 +1,66 @@
+# Dependencies
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+dist
+build
+
+# Development files
+.git
+.gitignore
+README.md
+*.md
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE and editor files
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage
+
+# Docker files (avoid recursive copying)
+Dockerfile*
+.dockerignore
+
+# Azure pipelines
+azure-build-pipelines/
+
+# Documentation files (already included in .md exclusion above, but being explicit)
+AZURE_BLOB_CORS_FIX.md
+CODE_REVIEW_SUMMARY.md
+SIGNED_URL_FIX_SUMMARY.md
+SIGNUP_API_ENHANCEMENT.md
+SIGNUP_FEATURES.md
+UPLOAD_API_DOCUMENTATION.md
+USERNAME_UPDATE_SUMMARY.md
+VITALS_EXTRACTION_FIX_SUMMARY.md
+

@@ -1,0 +1,42 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Metadata
+metadata:
+  name: swasthasathi-app
+  namespace: swasthasathi
+
+# Resources to deploy
+resources:
+  - namespace.yaml
+  - configmap.yaml
+  - deployment.yaml
+  - service.yaml
+  - ingress.yaml
+
+# Common labels to apply to all resources
+commonLabels:
+  app: swasthasathi-app
+  managed-by: jenkins
+
+# Images to replace (useful for Jenkins pipeline)
+images:
+  - name: swasthasathi-app
+    newTag: latest # This will be replaced by Jenkins with actual build tag
+
+# ConfigMap generator (alternative to configmap.yaml)
+# configMapGenerator:
+#   - name: swasthasathi-app-env-config
+#     literals:
+#       - NODE_ENV=production
+#       - VITE_APP_BASE_PATH=/swasthasathi-app/
+
+# Namespace to deploy into
+namespace: swasthasathi
+
+# Patches for different environments
+# patchesStrategicMerge:
+#   - patches/production-patch.yaml
+
+# Name prefix for all resources
+# namePrefix: prod-
