@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
       - name: swasthasathi-app
-        image: swasthasathi-app:latest  # This will be replaced by Jenkins with actual image tag
+        image: ghcr.io/nagapraveen-automationtesting/swasthasathi-app:latest  # This will be replaced by Jenkins with actual image tag
         imagePullPolicy: Always
         ports:
         - containerPort: 5000

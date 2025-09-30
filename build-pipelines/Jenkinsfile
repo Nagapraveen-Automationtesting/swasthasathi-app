@@ -145,9 +145,8 @@ pipeline {
                     echo "📝 Updating Kubernetes manifests..."
                     dir('build-pipelines') {
                         sh """
-                            # Update image tag and name in kustomization.yaml
+                            # Update image tag in kustomization.yaml
                             sed -i 's|newTag: .*|newTag: "${IMAGE_TAG}"|g' kustomization.yaml
-                            sed -i 's|newName: .*|newName: ${IMAGE_NAME}|g' kustomization.yaml
                             
                             echo "📋 Updated manifests:"
                             cat kustomization.yaml | grep -A 2 "images:"
