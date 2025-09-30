@@ -163,6 +163,7 @@ pipeline {
             steps {
                 script {
                     echo "🚀 Deploying to Kubernetes..."
+                    // Option 1: Using kubeconfig (current method)
                     withKubeConfig([credentialsId: 'kubeconfig']) {
                         dir('build-pipelines') {
                             sh """
