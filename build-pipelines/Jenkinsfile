@@ -146,7 +146,7 @@ pipeline {
                     dir('build-pipelines') {
                         sh """
                             # Update image tag in kustomization.yaml
-                            sed -i 's|newTag: .*|newTag: ${IMAGE_TAG}|g' kustomization.yaml
+                            sed -i 's|newTag: .*|newTag: "${IMAGE_TAG}"|g' kustomization.yaml
                             
                             # Update image name if needed
                             sed -i 's|name: swasthasathi-app|name: ${IMAGE_NAME}|g' kustomization.yaml
