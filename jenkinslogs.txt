@@ -1,0 +1,1641 @@
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withCredentials
+Masking supported pattern matches of %KUBECONFIG% or %DOCKER_REGISTRY%
+[Pipeline] {
+[Pipeline] withEnv
+Warning: A secret was passed to "withEnv" using Groovy String interpolation, which is insecure.
+		 Affected argument(s) used the following variable(s): [DOCKER_REGISTRY]
+		 See https://jenkins.io/redirect/groovy-string-interpolation for details.
+[Pipeline] {
+[Pipeline] timeout
+Timeout set to expire in 30 min
+[Pipeline] {
+[Pipeline] timestamps
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+21:52:02  ðŸ”„ Checking out source code...
+[Pipeline] checkout
+21:52:02  The recommended git tool is: git.exe
+21:52:02  using credential cfc34cca-d1ce-49e1-bff6-050be10aa083
+21:52:02   > git.exe rev-parse --resolve-git-dir C:\Users\Praveen\.jenkins\workspace\swasthasathi-app\.git # timeout=10
+21:52:02  Fetching changes from the remote Git repository
+21:52:02   > git.exe config remote.origin.url https://github.com/Nagapraveen-Automationtesting/swasthasathi-app.git # timeout=10
+21:52:02  Fetching upstream changes from https://github.com/Nagapraveen-Automationtesting/swasthasathi-app.git
+21:52:02   > git.exe --version # timeout=10
+21:52:02   > git --version # 'git version 2.47.1.windows.2'
+21:52:02  using GIT_ASKPASS to set credentials 
+21:52:02   > git.exe fetch --tags --force --progress -- https://github.com/Nagapraveen-Automationtesting/swasthasathi-app.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+21:52:04   > git.exe rev-parse "refs/remotes/origin/master^{commit}" # timeout=10
+21:52:04  Checking out Revision da349175ba994fc98cb978ef1aae059549b932ec (refs/remotes/origin/master)
+21:52:04   > git.exe config core.sparsecheckout # timeout=10
+21:52:04   > git.exe checkout -f da349175ba994fc98cb978ef1aae059549b932ec # timeout=10
+21:52:04  Commit message: "removed restriction"
+[Pipeline] sh
+21:52:05  + git rev-parse HEAD
+[Pipeline] sh
+21:52:05  + git rev-parse --short HEAD
+[Pipeline] sh
+21:52:06  + git rev-parse --abbrev-ref HEAD
+[Pipeline] echo
+21:52:06  ðŸ“‹ Build Info:
+[Pipeline] echo
+21:52:06    - Build Number: 18
+[Pipeline] echo
+21:52:06    - Git Commit: da349175
+[Pipeline] echo
+21:52:06    - Git Branch: origin/master
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Install Dependencies & Build)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+21:52:06  ðŸ“¦ Installing dependencies and building application...
+[Pipeline] sh
+21:52:07  + npm ci --ignore-scripts
+21:52:21  npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+21:52:21  npm warn deprecated npmlog@5.0.1: This package is no longer supported.
+21:52:21  npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+21:52:22  npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+21:52:22  npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+21:52:22  npm warn deprecated are-we-there-yet@2.0.0: This package is no longer supported.
+21:52:22  npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+21:52:24  npm warn deprecated gauge@3.0.2: This package is no longer supported.
+21:52:30  npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+21:52:36  
+21:52:36  added 367 packages, and audited 368 packages in 28s
+21:52:36  
+21:52:36  121 packages are looking for funding
+21:52:36    run `npm fund` for details
+21:52:36  
+21:52:36  3 vulnerabilities (2 moderate, 1 high)
+21:52:36  
+21:52:36  To address all issues (including breaking changes), run:
+21:52:36    npm audit fix --force
+21:52:36  
+21:52:36  Run `npm audit` for details.
+21:52:37  + npm run lint
+21:52:38  
+21:52:38  > swasthasathi-app@1.0.0 lint
+21:52:38  > eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 50
+21:52:38  
+21:52:44  
+21:52:44  C:\Users\Praveen\.jenkins\workspace\swasthasathi-app\src\components\DocumentViewer.jsx
+21:52:44      1:8   warning  'React' is defined but never used. Allowed unused vars must match /^_/u                                                                                                                                                                                                        no-unused-vars
+21:52:44      3:10  warning  'getDocumentContent' is defined but never used. Allowed unused vars must match /^_/u                                                                                                                                                                                           no-unused-vars
+21:52:44     36:10  warning  'activeTab' is assigned a value but never used. Allowed unused vars must match /^_/u                                                                                                                                                                                           no-unused-vars
+21:52:44     36:21  warning  'setActiveTab' is assigned a value but never used. Allowed unused vars must match /^_/u                                                                                                                                                                                        no-unused-vars
+21:52:44     54:6   warning  React Hook useEffect has a missing dependency: 'initializeViewer'. Either include it or remove the dependency array                                                                                                                                                            react-hooks/exhaustive-deps
+21:52:44     62:6   warning  React Hook useEffect has missing dependencies: 'documentData', 'initializeViewer', and 'loading'. Either include them or remove the dependency array. Mutable values like 'canvasRef.current' aren't valid dependencies because mutating them doesn't re-render the component  react-hooks/exhaustive-deps
+21:52:44    602:9   warning  'drawPDFPlaceholder' is assigned a value but never used. Allowed unused vars must match /^_/u                                                                                                                                                                                  no-unused-vars
+21:52:44  
+21:52:44  C:\Users\Praveen\.jenkins\workspace\swasthasathi-app\src\contexts\AuthContext.jsx
+21:52:44    73:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+21:52:44  
+21:52:44  C:\Users\Praveen\.jenkins\workspace\swasthasathi-app\src\pages\Home\Home.jsx
+21:52:44    2:16  warning  'useNavigate' is defined but never used. Allowed unused vars must match /^_/u  no-unused-vars
+21:52:44    3:8   warning  'React' is defined but never used. Allowed unused vars must match /^_/u        no-unused-vars
+21:52:44  
+21:52:44  C:\Users\Praveen\.jenkins\workspace\swasthasathi-app\src\pages\Reports\Reports.jsx
+21:52:44      1:8   warning  'React' is defined but never used. Allowed unused vars must match /^_/u                                                     no-unused-vars
+21:52:44     11:23  warning  'getFileCategory' is defined but never used. Allowed unused vars must match /^_/u                                           no-unused-vars
+21:52:44     27:10  warning  'totalPages' is assigned a value but never used. Allowed unused vars must match /^_/u                                       no-unused-vars
+21:52:44    180:6   warning  React Hook useEffect has a missing dependency: 'calculateCategoryCounts'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+21:52:44    463:9   warning  'formatFileSize' is assigned a value but never used. Allowed unused vars must match /^_/u                                   no-unused-vars
+21:52:44  
+21:52:44  C:\Users\Praveen\.jenkins\workspace\swasthasathi-app\src\utils\network-clean.js
+21:52:44    3:28  warning  'getToken' is defined but never used. Allowed unused vars must match /^_/u  no-unused-vars
+21:52:44  
+21:52:44  C:\Users\Praveen\.jenkins\workspace\swasthasathi-app\src\utils\network.js
+21:52:44    3:28  warning  'getToken' is defined but never used. Allowed unused vars must match /^_/u  no-unused-vars
+21:52:44  
+21:52:44  âœ– 17 problems (0 errors, 17 warnings)
+21:52:44  
+21:52:44  + npm run build
+21:52:45  
+21:52:45  > swasthasathi-app@1.0.0 build
+21:52:45  > vite build
+21:52:45  
+21:52:47  [36mvite v5.4.20 [32mbuilding for production...[36m[39m
+21:52:47  transforming...
+21:52:49  DEPRECATION WARNING [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+21:52:49  
+21:52:49  More info: https://sass-lang.com/d/legacy-js-api
+21:52:49  
+21:52:49  DEPRECATION WARNING [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+21:52:49  
+21:52:49  More info: https://sass-lang.com/d/legacy-js-api
+21:52:49  
+21:52:49  DEPRECATION WARNING [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+21:52:49  
+21:52:49  More info: https://sass-lang.com/d/legacy-js-api
+21:52:49  
+21:52:49  DEPRECATION WARNING [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+21:52:49  
+21:52:49  More info: https://sass-lang.com/d/legacy-js-api
+21:52:49  
+21:52:49  DEPRECATION WARNING [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+21:52:49  
+21:52:49  More info: https://sass-lang.com/d/legacy-js-api
+21:52:49  
+21:52:50  DEPRECATION WARNING [global-builtin]: Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+21:52:50  Use color.adjust instead.
+21:52:50  
+21:52:50  More info and automated migrator: https://sass-lang.com/d/import
+21:52:50  
+21:52:50      â•·
+21:52:50  541 â”‚             background: darken($error-color, 10%);
+21:52:50      â”‚                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+21:52:50      â•µ
+21:52:50      src\pages\Home\Home.scss 541:25  root stylesheet
+21:52:50  
+21:52:50  DEPRECATION WARNING [color-functions]: darken() is deprecated. Suggestions:
+21:52:50  
+21:52:50  color.scale($color, $lightness: -19.7674418605%)
+21:52:50  color.adjust($color, $lightness: -10%)
+21:52:50  
+21:52:50  More info: https://sass-lang.com/d/color-functions
+21:52:50  
+21:52:50      â•·
+21:52:50  541 â”‚             background: darken($error-color, 10%);
+21:52:50      â”‚                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+21:52:50      â•µ
+21:52:50      src\pages\Home\Home.scss 541:25  root stylesheet
+21:52:50  
+21:52:50  DEPRECATION WARNING [global-builtin]: Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+21:52:50  Use color.adjust instead.
+21:52:50  
+21:52:50  More info and automated migrator: https://sass-lang.com/d/import
+21:52:50  
+21:52:50      â•·
+21:52:50  644 â”‚           color: darken($primary-blue, 10%);
+21:52:50      â”‚                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+21:52:50      â•µ
+21:52:50      src\pages\Signup\Signup.scss 644:18  root stylesheet
+21:52:50  
+21:52:50  DEPRECATION WARNING [color-functions]: darken() is deprecated. Suggestions:
+21:52:50  
+21:52:50  color.scale($color, $lightness: -18.75%)
+21:52:50  color.adjust($color, $lightness: -10%)
+21:52:50  
+21:52:50  More info: https://sass-lang.com/d/color-functions
+21:52:50  
+21:52:50      â•·
+21:52:50  644 â”‚           color: darken($primary-blue, 10%);
+21:52:50      â”‚                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+21:52:50      â•µ
+21:52:50      src\pages\Signup\Signup.scss 644:18  root stylesheet
+21:52:50  
+21:52:50  DEPRECATION WARNING [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+21:52:50  
+21:52:50  More info: https://sass-lang.com/d/legacy-js-api
+21:52:50  
+21:52:55  [32mâœ“[39m 68 modules transformed.
+21:52:55  node_modules/pdfjs-dist/build/pdf.js (1982:23): Use of eval in "node_modules/pdfjs-dist/build/pdf.js" is strongly discouraged as it poses security risks and may cause issues with minification.
+21:52:56  rendering chunks...
+21:52:56  computing gzip size...
+21:52:57  [2mdist/[22m[32mindex.html                 [39m[1m[2m  1.08 kB[22m[1m[22m[2m â”‚ gzip:   0.41 kB[22m
+21:52:57  [2mdist/[22m[32massets/logo-B1K_7qVN.png   [39m[1m[2m 13.19 kB[22m[1m[22m
+21:52:57  [2mdist/[22m[35massets/index-DIe-lHdP.css  [39m[1m[2m 79.08 kB[22m[1m[22m[2m â”‚ gzip:  10.10 kB[22m
+21:52:57  [2mdist/[22m[36massets/index-DyT6mgNS.js   [39m[1m[33m693.39 kB[39m[22m[2m â”‚ gzip: 198.97 kB[22m
+21:52:57  [33m
+21:52:57  (!) Some chunks are larger than 500 kB after minification. Consider:
+21:52:57  - Using dynamic import() to code-split the application
+21:52:57  - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+21:52:57  - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.[39m
+21:52:57  [32mâœ“ built in 9.86s[39m
+21:52:57  + '[' '!' -d dist ']'
+21:52:57  + echo 'Ã¢Å“â€¦ Build completed successfully'
+21:52:57  Ã¢Å“â€¦ Build completed successfully
+21:52:57  + ls -la dist/
+21:52:57  total 20
+21:52:57  drwxr-xr-x 1 Praveen 197121    0 Sep 30 21:52 .
+21:52:57  drwxr-xr-x 1 Praveen 197121    0 Sep 30 21:52 ..
+21:52:57  drwxr-xr-x 1 Praveen 197121    0 Sep 30 21:52 assets
+21:52:57  -rw-r--r-- 1 Praveen 197121 1078 Sep 30 21:52 index.html
+21:52:57  -rw-r--r-- 1 Praveen 197121 1497 Sep 28 11:40 vite.svg
+[Pipeline] }
+[Pipeline] // script
+Post stage
+[Pipeline] archiveArtifacts
+21:52:57  Archiving artifacts
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Docker Image)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+21:52:57  ðŸ�³ Building Docker image...
+[Pipeline] sh
+21:52:57  Warning: A secret was passed to "sh" using Groovy String interpolation, which is insecure.
+21:52:57  		 Affected argument(s) used the following variable(s): [DOCKER_REGISTRY]
+21:52:57  		 See https://jenkins.io/redirect/groovy-string-interpolation for details.
+21:52:58  ++ date -u +%Y-%m-%dT%H:%M:%SZ
+21:52:58  + docker build --tag ****/nagapraveen-automationtesting/swasthasathi-app:18 --tag ****/nagapraveen-automationtesting/swasthasathi-app:latest --label build.number=18 --label git.commit=da349175ba994fc98cb978ef1aae059549b932ec --label git.branch=origin/master --label build.date=2025-09-30T16:22:58Z .
+21:53:00  #0 building with "desktop-linux" instance using docker driver
+21:53:00  
+21:53:00  #1 [internal] load build definition from Dockerfile
+21:53:00  #1 transferring dockerfile: 729B 0.0s done
+21:53:00  #1 WARN: FromAsCasing: 'as' and 'FROM' keywords' casing do not match (line 1)
+21:53:00  #1 WARN: FromAsCasing: 'as' and 'FROM' keywords' casing do not match (line 13)
+21:53:00  #1 DONE 0.1s
+21:53:00  
+21:53:00  #2 [internal] load metadata for docker.io/library/nginx:alpine
+21:53:01  #2 ...
+21:53:01  
+21:53:01  #3 [auth] library/node:pull token for registry-1.docker.io
+21:53:01  #3 DONE 0.0s
+21:53:01  
+21:53:01  #4 [auth] library/nginx:pull token for registry-1.docker.io
+21:53:01  #4 DONE 0.0s
+21:53:01  
+21:53:01  #5 [internal] load metadata for docker.io/library/node:18-alpine
+21:53:02  #5 ...
+21:53:02  
+21:53:02  #2 [internal] load metadata for docker.io/library/nginx:alpine
+21:53:02  #2 DONE 2.4s
+21:53:02  
+21:53:02  #5 [internal] load metadata for docker.io/library/node:18-alpine
+21:53:03  #5 DONE 3.7s
+21:53:03  
+21:53:03  #6 [internal] load .dockerignore
+21:53:03  #6 transferring context: 1.01kB done
+21:53:03  #6 DONE 0.0s
+21:53:03  
+21:53:03  #7 [production-stage 1/6] FROM docker.io/library/nginx:alpine@sha256:42a516af16b852e33b7682d5ef8acbd5d13fe08fecadc7ed98605ba5e3b26ab8
+21:53:03  #7 resolve docker.io/library/nginx:alpine@sha256:42a516af16b852e33b7682d5ef8acbd5d13fe08fecadc7ed98605ba5e3b26ab8 0.0s done
+21:53:03  #7 DONE 0.0s
+21:53:03  
+21:53:03  #8 [build-stage 1/6] FROM docker.io/library/node:18-alpine@sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e
+21:53:03  #8 resolve docker.io/library/node:18-alpine@sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e 0.0s done
+21:53:03  #8 DONE 0.0s
+21:53:03  
+21:53:03  #9 [internal] load build context
+21:53:04  #9 transferring context: 548.80kB 0.1s done
+21:53:04  #9 DONE 0.1s
+21:53:04  
+21:53:04  #8 [build-stage 1/6] FROM docker.io/library/node:18-alpine@sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e
+21:53:04  #8 DONE 0.1s
+21:53:04  
+21:53:04  #8 [build-stage 1/6] FROM docker.io/library/node:18-alpine@sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e
+21:53:04  #8 sha256:25ff2da83641908f65c3a74d80409d6b1b62ccfaab220b9ea70b80df5a2e0549 0B / 446B 0.2s
+21:53:04  #8 sha256:1e5a4c89cee5c0826c540ab06d4b6b491c96eda01837f430bd47f0d26702d6e3 0B / 1.26MB 0.2s
+21:53:04  #8 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 0B / 40.01MB 0.2s
+21:53:04  #8 sha256:f18232174bc91741fdf3da96d85011092101a032a93a388b79e99e69c2d5c870 0B / 3.64MB 0.2s
+21:53:04  #8 sha256:25ff2da83641908f65c3a74d80409d6b1b62ccfaab220b9ea70b80df5a2e0549 446B / 446B 0.6s done
+21:53:05  #8 sha256:1e5a4c89cee5c0826c540ab06d4b6b491c96eda01837f430bd47f0d26702d6e3 1.26MB / 1.26MB 1.0s done
+21:53:05  #8 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 3.15MB / 40.01MB 1.5s
+21:53:05  #8 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 5.24MB / 40.01MB 1.7s
+21:53:05  #8 sha256:f18232174bc91741fdf3da96d85011092101a032a93a388b79e99e69c2d5c870 1.05MB / 3.64MB 1.5s
+21:53:05  #8 sha256:f18232174bc91741fdf3da96d85011092101a032a93a388b79e99e69c2d5c870 3.64MB / 3.64MB 1.7s done
+21:53:05  #8 extracting sha256:f18232174bc91741fdf3da96d85011092101a032a93a388b79e99e69c2d5c870
+21:53:06  #8 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 7.34MB / 40.01MB 1.8s
+21:53:06  #8 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 10.49MB / 40.01MB 2.0s
+21:53:06  #8 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 12.58MB / 40.01MB 2.1s
+21:53:06  #8 extracting sha256:f18232174bc91741fdf3da96d85011092101a032a93a388b79e99e69c2d5c870 0.4s done
+21:53:06  #8 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 15.73MB / 40.01MB 2.4s
+21:53:06  #8 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 19.92MB / 40.01MB 2.7s
+21:53:06  #8 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 22.02MB / 40.01MB 2.9s
+21:53:07  #8 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 25.17MB / 40.01MB 3.2s
+21:53:07  #8 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 27.26MB / 40.01MB 3.3s
+21:53:07  #8 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 29.36MB / 40.01MB 3.6s
+21:53:07  #8 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 32.51MB / 40.01MB 3.8s
+21:53:08  #8 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 35.65MB / 40.01MB 3.9s
+21:53:08  #8 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 37.75MB / 40.01MB 4.2s
+21:53:08  #8 sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 40.01MB / 40.01MB 4.3s done
+21:53:08  #8 extracting sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e
+21:53:10  #8 extracting sha256:dd71dde834b5c203d162902e6b8994cb2309ae049a0eabc4efea161b2b5a3d0e 2.2s done
+21:53:10  #8 DONE 6.7s
+21:53:10  
+21:53:10  #8 [build-stage 1/6] FROM docker.io/library/node:18-alpine@sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e
+21:53:10  #8 extracting sha256:1e5a4c89cee5c0826c540ab06d4b6b491c96eda01837f430bd47f0d26702d6e3 0.1s done
+21:53:10  #8 extracting sha256:25ff2da83641908f65c3a74d80409d6b1b62ccfaab220b9ea70b80df5a2e0549 0.0s done
+21:53:10  #8 DONE 6.8s
+21:53:11  
+21:53:11  #10 [build-stage 2/6] WORKDIR /app
+21:53:11  #10 DONE 0.2s
+21:53:11  
+21:53:11  #11 [build-stage 3/6] COPY package*.json ./
+21:53:11  #11 DONE 0.1s
+21:53:11  
+21:53:11  #12 [build-stage 4/6] RUN npm ci --ignore-scripts
+21:53:13  #12 2.317 npm warn EBADENGINE Unsupported engine {
+21:53:13  #12 2.317 npm warn EBADENGINE   package: '@azure/core-auth@1.10.1',
+21:53:13  #12 2.317 npm warn EBADENGINE   required: { node: '>=20.0.0' },
+21:53:13  #12 2.317 npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+21:53:13  #12 2.317 npm warn EBADENGINE }
+21:53:13  #12 2.319 npm warn EBADENGINE Unsupported engine {
+21:53:13  #12 2.319 npm warn EBADENGINE   package: '@azure/core-client@1.10.1',
+21:53:13  #12 2.319 npm warn EBADENGINE   required: { node: '>=20.0.0' },
+21:53:13  #12 2.319 npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+21:53:13  #12 2.319 npm warn EBADENGINE }
+21:53:13  #12 2.320 npm warn EBADENGINE Unsupported engine {
+21:53:13  #12 2.320 npm warn EBADENGINE   package: '@azure/core-http-compat@2.3.1',
+21:53:13  #12 2.320 npm warn EBADENGINE   required: { node: '>=20.0.0' },
+21:53:13  #12 2.320 npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+21:53:13  #12 2.320 npm warn EBADENGINE }
+21:53:13  #12 2.321 npm warn EBADENGINE Unsupported engine {
+21:53:13  #12 2.321 npm warn EBADENGINE   package: '@azure/core-rest-pipeline@1.22.1',
+21:53:13  #12 2.321 npm warn EBADENGINE   required: { node: '>=20.0.0' },
+21:53:13  #12 2.321 npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+21:53:13  #12 2.321 npm warn EBADENGINE }
+21:53:13  #12 2.324 npm warn EBADENGINE Unsupported engine {
+21:53:13  #12 2.324 npm warn EBADENGINE   package: '@azure/core-tracing@1.3.1',
+21:53:13  #12 2.324 npm warn EBADENGINE   required: { node: '>=20.0.0' },
+21:53:13  #12 2.324 npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+21:53:13  #12 2.324 npm warn EBADENGINE }
+21:53:13  #12 2.329 npm warn EBADENGINE Unsupported engine {
+21:53:13  #12 2.329 npm warn EBADENGINE   package: '@azure/core-util@1.13.1',
+21:53:13  #12 2.329 npm warn EBADENGINE   required: { node: '>=20.0.0' },
+21:53:13  #12 2.329 npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+21:53:13  #12 2.329 npm warn EBADENGINE }
+21:53:13  #12 2.329 npm warn EBADENGINE Unsupported engine {
+21:53:13  #12 2.329 npm warn EBADENGINE   package: '@azure/core-xml@1.5.0',
+21:53:13  #12 2.329 npm warn EBADENGINE   required: { node: '>=20.0.0' },
+21:53:13  #12 2.329 npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+21:53:13  #12 2.329 npm warn EBADENGINE }
+21:53:13  #12 2.329 npm warn EBADENGINE Unsupported engine {
+21:53:13  #12 2.329 npm warn EBADENGINE   package: '@azure/logger@1.3.0',
+21:53:13  #12 2.329 npm warn EBADENGINE   required: { node: '>=20.0.0' },
+21:53:13  #12 2.329 npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+21:53:13  #12 2.329 npm warn EBADENGINE }
+21:53:13  #12 2.329 npm warn EBADENGINE Unsupported engine {
+21:53:13  #12 2.329 npm warn EBADENGINE   package: '@azure/storage-blob@12.28.0',
+21:53:13  #12 2.329 npm warn EBADENGINE   required: { node: '>=20.0.0' },
+21:53:13  #12 2.329 npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+21:53:13  #12 2.329 npm warn EBADENGINE }
+21:53:13  #12 2.331 npm warn EBADENGINE Unsupported engine {
+21:53:13  #12 2.331 npm warn EBADENGINE   package: '@azure/storage-common@12.0.0',
+21:53:13  #12 2.331 npm warn EBADENGINE   required: { node: '>=20.0.0' },
+21:53:13  #12 2.331 npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+21:53:13  #12 2.331 npm warn EBADENGINE }
+21:53:13  #12 2.335 npm warn EBADENGINE Unsupported engine {
+21:53:13  #12 2.335 npm warn EBADENGINE   package: '@typespec/ts-http-runtime@0.3.1',
+21:53:13  #12 2.335 npm warn EBADENGINE   required: { node: '>=20.0.0' },
+21:53:13  #12 2.335 npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+21:53:13  #12 2.335 npm warn EBADENGINE }
+21:53:13  #12 2.341 npm warn EBADENGINE Unsupported engine {
+21:53:13  #12 2.341 npm warn EBADENGINE   package: 'react-router@7.9.1',
+21:53:13  #12 2.341 npm warn EBADENGINE   required: { node: '>=20.0.0' },
+21:53:13  #12 2.341 npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+21:53:13  #12 2.341 npm warn EBADENGINE }
+21:53:13  #12 2.341 npm warn EBADENGINE Unsupported engine {
+21:53:13  #12 2.341 npm warn EBADENGINE   package: 'react-router-dom@7.9.1',
+21:53:13  #12 2.341 npm warn EBADENGINE   required: { node: '>=20.0.0' },
+21:53:13  #12 2.341 npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+21:53:13  #12 2.341 npm warn EBADENGINE }
+21:53:19  #12 8.111 npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+21:53:19  #12 8.251 npm warn deprecated npmlog@5.0.1: This package is no longer supported.
+21:53:20  #12 9.047 npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+21:53:20  #12 9.514 npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+21:53:21  #12 10.83 npm warn deprecated gauge@3.0.2: This package is no longer supported.
+21:53:22  #12 10.92 npm warn deprecated are-we-there-yet@2.0.0: This package is no longer supported.
+21:53:22  #12 11.06 npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+21:53:22  #12 11.12 npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+21:53:27  #12 15.98 npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+21:53:30  #12 18.98 
+21:53:30  #12 18.98 added 368 packages, and audited 369 packages in 18s
+21:53:30  #12 18.98 
+21:53:30  #12 18.98 122 packages are looking for funding
+21:53:30  #12 18.98   run `npm fund` for details
+21:53:30  #12 19.02 
+21:53:30  #12 19.02 3 vulnerabilities (2 moderate, 1 high)
+21:53:30  #12 19.02 
+21:53:30  #12 19.02 To address all issues (including breaking changes), run:
+21:53:30  #12 19.02   npm audit fix --force
+21:53:30  #12 19.02 
+21:53:30  #12 19.02 Run `npm audit` for details.
+21:53:30  #12 19.02 npm notice
+21:53:30  #12 19.02 npm notice New major version of npm available! 10.8.2 -> 11.6.1
+21:53:30  #12 19.02 npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.6.1
+21:53:30  #12 19.02 npm notice To update run: npm install -g npm@11.6.1
+21:53:30  #12 19.02 npm notice
+21:53:30  #12 DONE 19.2s
+21:53:30  
+21:53:30  #13 [build-stage 5/6] COPY . .
+21:53:30  #13 DONE 0.4s
+21:53:30  
+21:53:30  #14 [build-stage 6/6] RUN npm run build
+21:53:31  #14 0.627 
+21:53:31  #14 0.627 > swasthasathi-app@1.0.0 build
+21:53:31  #14 0.627 > vite build
+21:53:31  #14 0.627 
+21:53:31  #14 1.098 vite v5.4.20 building for production...
+21:53:32  #14 1.206 transforming...
+21:53:33  #14 2.642 DEPRECATION WARNING [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+21:53:33  #14 2.642 
+21:53:33  #14 2.642 More info: https://sass-lang.com/d/legacy-js-api
+21:53:33  #14 2.642 
+21:53:33  #14 2.791 DEPRECATION WARNING [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+21:53:33  #14 2.791 
+21:53:33  #14 2.791 More info: https://sass-lang.com/d/legacy-js-api
+21:53:33  #14 2.791 
+21:53:33  #14 2.868 DEPRECATION WARNING [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+21:53:33  #14 2.868 
+21:53:33  #14 2.868 More info: https://sass-lang.com/d/legacy-js-api
+21:53:33  #14 2.868 
+21:53:34  #14 3.256 DEPRECATION WARNING [global-builtin]: Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+21:53:34  #14 3.256 Use color.adjust instead.
+21:53:34  #14 3.256 
+21:53:34  #14 3.256 More info and automated migrator: https://sass-lang.com/d/import
+21:53:34  #14 3.256 
+21:53:34  #14 3.256     â•·
+21:53:34  #14 3.256 541 â”‚             background: darken($error-color, 10%);
+21:53:34  #14 3.256     â”‚                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+21:53:34  #14 3.256     â•µ
+21:53:34  #14 3.256     src/pages/Home/Home.scss 541:25  root stylesheet
+21:53:34  #14 3.256 
+21:53:34  #14 3.260 DEPRECATION WARNING [color-functions]: darken() is deprecated. Suggestions:
+21:53:34  #14 3.260 
+21:53:34  #14 3.260 color.scale($color, $lightness: -19.7674418605%)
+21:53:34  #14 3.260 color.adjust($color, $lightness: -10%)
+21:53:34  #14 3.260 
+21:53:34  #14 3.260 More info: https://sass-lang.com/d/color-functions
+21:53:34  #14 3.260 
+21:53:34  #14 3.260     â•·
+21:53:34  #14 3.260 541 â”‚             background: darken($error-color, 10%);
+21:53:34  #14 3.260     â”‚                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+21:53:34  #14 3.260     â•µ
+21:53:34  #14 3.260     src/pages/Home/Home.scss 541:25  root stylesheet
+21:53:34  #14 3.260 
+21:53:34  #14 3.274 DEPRECATION WARNING [global-builtin]: Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+21:53:34  #14 3.274 Use color.adjust instead.
+21:53:34  #14 3.274 
+21:53:34  #14 3.274 More info and automated migrator: https://sass-lang.com/d/import
+21:53:34  #14 3.274 
+21:53:34  #14 3.274     â•·
+21:53:34  #14 3.274 644 â”‚           color: darken($primary-blue, 10%);
+21:53:34  #14 3.274     â”‚                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+21:53:34  #14 3.274     â•µ
+21:53:34  #14 3.274     src/pages/Signup/Signup.scss 644:18  root stylesheet
+21:53:34  #14 3.274 
+21:53:34  #14 3.276 DEPRECATION WARNING [color-functions]: darken() is deprecated. Suggestions:
+21:53:34  #14 3.276 
+21:53:34  #14 3.276 color.scale($color, $lightness: -18.75%)
+21:53:34  #14 3.276 color.adjust($color, $lightness: -10%)
+21:53:34  #14 3.276 
+21:53:34  #14 3.276 More info: https://sass-lang.com/d/color-functions
+21:53:34  #14 3.276 
+21:53:34  #14 3.276     â•·
+21:53:34  #14 3.276 644 â”‚           color: darken($primary-blue, 10%);
+21:53:34  #14 3.276     â”‚                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+21:53:34  #14 3.276     â•µ
+21:53:34  #14 3.276     src/pages/Signup/Signup.scss 644:18  root stylesheet
+21:53:34  #14 3.276 
+21:53:34  #14 3.425 DEPRECATION WARNING [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+21:53:34  #14 3.425 
+21:53:34  #14 3.425 More info: https://sass-lang.com/d/legacy-js-api
+21:53:34  #14 3.425 
+21:53:34  #14 4.099 DEPRECATION WARNING [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+21:53:34  #14 4.099 
+21:53:34  #14 4.099 More info: https://sass-lang.com/d/legacy-js-api
+21:53:34  #14 4.099 
+21:53:35  #14 4.216 DEPRECATION WARNING [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+21:53:35  #14 4.216 
+21:53:35  #14 4.216 More info: https://sass-lang.com/d/legacy-js-api
+21:53:35  #14 4.216 
+21:53:40  #14 9.888 âœ“ 68 modules transformed.
+21:53:40  #14 10.24 node_modules/pdfjs-dist/build/pdf.js (1982:23): Use of eval in "node_modules/pdfjs-dist/build/pdf.js" is strongly discouraged as it poses security risks and may cause issues with minification.
+21:53:41  #14 10.99 rendering chunks...
+21:53:41  #14 11.05 computing gzip size...
+21:53:41  #14 11.13 dist/index.html                   1.08 kB â”‚ gzip:   0.41 kB
+21:53:41  #14 11.13 dist/assets/logo-B1K_7qVN.png    13.19 kB
+21:53:41  #14 11.13 dist/assets/index-DIe-lHdP.css   79.08 kB â”‚ gzip:  10.10 kB
+21:53:41  #14 11.13 dist/assets/index-DyT6mgNS.js   693.39 kB â”‚ gzip: 198.97 kB
+21:53:41  #14 11.13 
+21:53:41  #14 11.13 (!) Some chunks are larger than 500 kB after minification. Consider:
+21:53:41  #14 11.13 - Using dynamic import() to code-split the application
+21:53:41  #14 11.13 - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+21:53:41  #14 11.13 - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+21:53:41  #14 11.15 âœ“ built in 9.98s
+21:53:41  #14 DONE 11.2s
+21:53:42  
+21:53:42  #15 [production-stage 4/6] RUN addgroup -g 1001 -S nodejs &&     adduser -S nextjs -u 1001
+21:53:42  #15 CACHED
+21:53:42  
+21:53:42  #16 [production-stage 5/6] RUN chown -R nextjs:nodejs /usr/share/nginx/html &&     chmod -R 755 /usr/share/nginx/html
+21:53:42  #16 CACHED
+21:53:42  
+21:53:42  #17 [production-stage 2/6] COPY nginx.conf /etc/nginx/conf.d/default.conf
+21:53:42  #17 CACHED
+21:53:42  
+21:53:42  #18 [production-stage 3/6] COPY --from=build-stage /app/dist /usr/share/nginx/html
+21:53:42  #18 CACHED
+21:53:42  
+21:53:42  #19 [production-stage 6/6] RUN apk add --no-cache curl
+21:53:42  #19 CACHED
+21:53:42  
+21:53:42  #20 exporting to image
+21:53:42  #20 exporting layers done
+21:53:42  #20 exporting manifest sha256:d0288f23c22142f4d7229da4eccd3304336557d69548f8037aa1d435065372c0 0.0s done
+21:53:42  #20 exporting config sha256:751f385c8acba24cd3c40ec8a393ace61c363216118baba9685b2a229e3e4cf9 0.0s done
+21:53:42  #20 exporting attestation manifest sha256:66136deac59e9f1c79099d86afeb1dabb2fd3edbe6491ddb12097eb25844ab50 0.0s done
+21:53:42  #20 exporting manifest list sha256:2845121290f50fa8cfb92f276aba890cb09b7cc215c55bae2ba028c362b92437 0.0s done
+21:53:42  #20 naming to ****/nagapraveen-automationtesting/swasthasathi-app:18
+21:53:42  #20 naming to ****/nagapraveen-automationtesting/swasthasathi-app:18 done
+21:53:42  #20 unpacking to ****/nagapraveen-automationtesting/swasthasathi-app:18 0.0s done
+21:53:42  #20 naming to ****/nagapraveen-automationtesting/swasthasathi-app:latest done
+21:53:42  #20 unpacking to ****/nagapraveen-automationtesting/swasthasathi-app:latest 0.1s done
+21:53:42  #20 DONE 0.3s
+21:53:42  
+21:53:42  View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/87raj9hyulu1krvkws1lt0jbg
+21:53:42  
+21:53:42   [33m2 warnings found (use docker --debug to expand):
+21:53:42  [0m - FromAsCasing: 'as' and 'FROM' keywords' casing do not match (line 1)
+21:53:42   - FromAsCasing: 'as' and 'FROM' keywords' casing do not match (line 13)
+21:53:43  + echo 'Ã¢Å“â€¦ Docker image built successfully'
+21:53:43  Ã¢Å“â€¦ Docker image built successfully
+21:53:43  + docker images
+21:53:43  + grep swasthasathi-app
+21:53:43  ****/nagapraveen-automationtesting/swasthasathi-app   18                                                                            2845121290f5   18 minutes ago   81.7MB
+21:53:43  ****/nagapraveen-automationtesting/swasthasathi-app   latest                                                                        2845121290f5   18 minutes ago   81.7MB
+21:53:43  ****/nagapraveen-automationtesting/swasthasathi-app   17                                                                            82c793b58bfa   18 minutes ago   81.7MB
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Security Scan)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+21:53:44  ðŸ”’ Running security scans...
+[Pipeline] sh
+21:53:44  Warning: A secret was passed to "sh" using Groovy String interpolation, which is insecure.
+21:53:44  		 Affected argument(s) used the following variable(s): [DOCKER_REGISTRY]
+21:53:44  		 See https://jenkins.io/redirect/groovy-string-interpolation for details.
+21:53:44  + command -v trivy
+21:53:44  + echo 'Ã¢Å¡Â Ã¯Â¸ï¿½  Trivy not installed, skipping security scan'
+21:53:44  Ã¢Å¡Â Ã¯Â¸ï¿½  Trivy not installed, skipping security scan
+21:53:44  + echo 'Checking Docker image configuration...'
+21:53:44  Checking Docker image configuration...
+21:53:44  + docker inspect ****/nagapraveen-automationtesting/swasthasathi-app:18
+21:53:44  + jq '.[0].Config.User'
+21:53:44  C:/Users/Praveen/.jenkins/workspace/swasthasathi-app@tmp/durable-2d4cffaa/script.sh.copy: line 12: jq: command not found
+21:53:44  + grep -q 1001
+21:53:45  time="2025-09-30T21:53:45+05:30" level=error msg="write /dev/stdout: The pipe is being closed.\n"
+21:53:45  + echo 'Ã¢ï¿½Å’ Not running as non-root user'
+21:53:45  Ã¢ï¿½Å’ Not running as non-root user
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Push to Registry)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+21:53:45  ðŸ“¤ Pushing Docker image to registry...
+[Pipeline] withCredentials
+21:53:45  Masking supported pattern matches of %REGISTRY_PASS%
+[Pipeline] {
+[Pipeline] sh
+21:53:45  Warning: A secret was passed to "sh" using Groovy String interpolation, which is insecure.
+21:53:45  		 Affected argument(s) used the following variable(s): [DOCKER_REGISTRY]
+21:53:45  		 See https://jenkins.io/redirect/groovy-string-interpolation for details.
+21:53:46  + echo ****
+21:53:46  + docker login **** -u nagapraveen-automationtesting --password-stdin
+21:53:47  Login Succeeded
+21:53:47  + docker push ****/nagapraveen-automationtesting/swasthasathi-app:18
+21:53:48  The push refers to repository [****/nagapraveen-automationtesting/swasthasathi-app]
+21:53:48  9adfbae99cb7: Waiting
+21:53:48  e35c2250355d: Waiting
+21:53:48  01f2ab379e86: Waiting
+21:53:48  9824c27679d3: Waiting
+21:53:48  c9ebe2ff2d2c: Waiting
+21:53:48  679e36493b16: Waiting
+21:53:48  7e18d7894ecc: Waiting
+21:53:48  6bc572a340ec: Waiting
+21:53:48  7a8a46741e18: Waiting
+21:53:48  403e3f251637: Waiting
+21:53:48  abc78660ee22: Waiting
+21:53:48  a992fbc61ecc: Waiting
+21:53:48  cb1ff4086f82: Waiting
+21:53:48  6fb6674390d8: Waiting
+21:53:48  6fb6674390d8: Waiting
+21:53:48  9824c27679d3: Waiting
+21:53:48  9adfbae99cb7: Waiting
+21:53:48  e35c2250355d: Waiting
+21:53:48  01f2ab379e86: Waiting
+21:53:48  c9ebe2ff2d2c: Waiting
+21:53:48  679e36493b16: Waiting
+21:53:48  cb1ff4086f82: Waiting
+21:53:48  7e18d7894ecc: Waiting
+21:53:48  6bc572a340ec: Waiting
+21:53:48  7a8a46741e18: Waiting
+21:53:48  403e3f251637: Waiting
+21:53:48  abc78660ee22: Waiting
+21:53:48  a992fbc61ecc: Waiting
+21:53:48  6fb6674390d8: Waiting
+21:53:48  e35c2250355d: Waiting
+21:53:48  01f2ab379e86: Waiting
+21:53:48  9824c27679d3: Waiting
+21:53:48  9adfbae99cb7: Waiting
+21:53:48  c9ebe2ff2d2c: Waiting
+21:53:48  679e36493b16: Waiting
+21:53:48  abc78660ee22: Waiting
+21:53:48  a992fbc61ecc: Waiting
+21:53:48  cb1ff4086f82: Waiting
+21:53:48  7e18d7894ecc: Waiting
+21:53:48  6bc572a340ec: Waiting
+21:53:48  7a8a46741e18: Waiting
+21:53:48  403e3f251637: Waiting
+21:53:48  6fb6674390d8: Waiting
+21:53:48  e35c2250355d: Waiting
+21:53:48  01f2ab379e86: Waiting
+21:53:48  9824c27679d3: Waiting
+21:53:48  9adfbae99cb7: Waiting
+21:53:48  c9ebe2ff2d2c: Waiting
+21:53:48  679e36493b16: Waiting
+21:53:48  6bc572a340ec: Waiting
+21:53:48  7a8a46741e18: Waiting
+21:53:48  403e3f251637: Waiting
+21:53:48  abc78660ee22: Waiting
+21:53:48  a992fbc61ecc: Waiting
+21:53:48  cb1ff4086f82: Waiting
+21:53:48  7e18d7894ecc: Waiting
+21:53:48  a992fbc61ecc: Waiting
+21:53:48  cb1ff4086f82: Waiting
+21:53:48  7e18d7894ecc: Waiting
+21:53:48  6bc572a340ec: Waiting
+21:53:48  7a8a46741e18: Waiting
+21:53:48  403e3f251637: Waiting
+21:53:48  abc78660ee22: Waiting
+21:53:48  6fb6674390d8: Waiting
+21:53:48  01f2ab379e86: Waiting
+21:53:48  9824c27679d3: Waiting
+21:53:48  9adfbae99cb7: Waiting
+21:53:48  e35c2250355d: Waiting
+21:53:48  679e36493b16: Waiting
+21:53:48  c9ebe2ff2d2c: Waiting
+21:53:48  01f2ab379e86: Waiting
+21:53:48  9824c27679d3: Waiting
+21:53:48  9adfbae99cb7: Waiting
+21:53:48  e35c2250355d: Waiting
+21:53:48  679e36493b16: Waiting
+21:53:48  c9ebe2ff2d2c: Waiting
+21:53:48  a992fbc61ecc: Waiting
+21:53:48  cb1ff4086f82: Waiting
+21:53:48  7e18d7894ecc: Waiting
+21:53:48  6bc572a340ec: Waiting
+21:53:48  7a8a46741e18: Waiting
+21:53:48  403e3f251637: Waiting
+21:53:48  abc78660ee22: Waiting
+21:53:48  6fb6674390d8: Waiting
+21:53:48  9824c27679d3: Waiting
+21:53:48  9adfbae99cb7: Waiting
+21:53:48  e35c2250355d: Waiting
+21:53:48  01f2ab379e86: Waiting
+21:53:48  c9ebe2ff2d2c: Waiting
+21:53:48  679e36493b16: Waiting
+21:53:48  cb1ff4086f82: Waiting
+21:53:48  7e18d7894ecc: Waiting
+21:53:48  6bc572a340ec: Waiting
+21:53:48  7a8a46741e18: Waiting
+21:53:48  403e3f251637: Waiting
+21:53:48  abc78660ee22: Waiting
+21:53:48  a992fbc61ecc: Waiting
+21:53:48  6fb6674390d8: Waiting
+21:53:48  a992fbc61ecc: Waiting
+21:53:48  cb1ff4086f82: Waiting
+21:53:48  7e18d7894ecc: Waiting
+21:53:48  6bc572a340ec: Waiting
+21:53:48  7a8a46741e18: Waiting
+21:53:48  403e3f251637: Waiting
+21:53:48  abc78660ee22: Waiting
+21:53:48  6fb6674390d8: Waiting
+21:53:48  01f2ab379e86: Waiting
+21:53:48  9824c27679d3: Waiting
+21:53:48  9adfbae99cb7: Waiting
+21:53:48  e35c2250355d: Waiting
+21:53:48  679e36493b16: Waiting
+21:53:48  c9ebe2ff2d2c: Waiting
+21:53:49  c9ebe2ff2d2c: Waiting
+21:53:49  679e36493b16: Waiting
+21:53:49  abc78660ee22: Waiting
+21:53:49  a992fbc61ecc: Waiting
+21:53:49  cb1ff4086f82: Waiting
+21:53:49  7e18d7894ecc: Waiting
+21:53:49  6bc572a340ec: Waiting
+21:53:49  7a8a46741e18: Waiting
+21:53:49  403e3f251637: Waiting
+21:53:49  6fb6674390d8: Waiting
+21:53:49  e35c2250355d: Waiting
+21:53:49  01f2ab379e86: Waiting
+21:53:49  9824c27679d3: Waiting
+21:53:49  9adfbae99cb7: Waiting
+21:53:49  7e18d7894ecc: Waiting
+21:53:49  6bc572a340ec: Waiting
+21:53:49  7a8a46741e18: Waiting
+21:53:49  403e3f251637: Waiting
+21:53:49  abc78660ee22: Waiting
+21:53:49  a992fbc61ecc: Waiting
+21:53:49  cb1ff4086f82: Waiting
+21:53:49  6fb6674390d8: Waiting
+21:53:49  9adfbae99cb7: Waiting
+21:53:49  e35c2250355d: Waiting
+21:53:49  01f2ab379e86: Waiting
+21:53:49  9824c27679d3: Waiting
+21:53:49  c9ebe2ff2d2c: Waiting
+21:53:49  679e36493b16: Waiting
+21:53:49  c9ebe2ff2d2c: Waiting
+21:53:49  679e36493b16: Waiting
+21:53:49  7e18d7894ecc: Waiting
+21:53:49  6bc572a340ec: Waiting
+21:53:49  7a8a46741e18: Waiting
+21:53:49  403e3f251637: Waiting
+21:53:49  abc78660ee22: Waiting
+21:53:49  a992fbc61ecc: Waiting
+21:53:49  cb1ff4086f82: Waiting
+21:53:49  6fb6674390d8: Waiting
+21:53:49  9adfbae99cb7: Waiting
+21:53:49  e35c2250355d: Waiting
+21:53:49  01f2ab379e86: Waiting
+21:53:49  9824c27679d3: Waiting
+21:53:49  c9ebe2ff2d2c: Waiting
+21:53:49  679e36493b16: Waiting
+21:53:49  403e3f251637: Waiting
+21:53:49  abc78660ee22: Waiting
+21:53:49  a992fbc61ecc: Waiting
+21:53:49  cb1ff4086f82: Waiting
+21:53:49  7e18d7894ecc: Waiting
+21:53:49  6bc572a340ec: Waiting
+21:53:49  7a8a46741e18: Waiting
+21:53:49  6fb6674390d8: Waiting
+21:53:49  e35c2250355d: Waiting
+21:53:49  01f2ab379e86: Waiting
+21:53:49  9824c27679d3: Waiting
+21:53:49  9adfbae99cb7: Waiting
+21:53:49  403e3f251637: Waiting
+21:53:49  abc78660ee22: Waiting
+21:53:49  a992fbc61ecc: Waiting
+21:53:49  cb1ff4086f82: Waiting
+21:53:49  7e18d7894ecc: Waiting
+21:53:49  6bc572a340ec: Waiting
+21:53:49  7a8a46741e18: Waiting
+21:53:49  6fb6674390d8: Waiting
+21:53:49  e35c2250355d: Waiting
+21:53:49  01f2ab379e86: Waiting
+21:53:49  9824c27679d3: Waiting
+21:53:49  9adfbae99cb7: Waiting
+21:53:49  c9ebe2ff2d2c: Waiting
+21:53:49  679e36493b16: Waiting
+21:53:49  7a8a46741e18: Waiting
+21:53:49  403e3f251637: Waiting
+21:53:49  abc78660ee22: Waiting
+21:53:49  a992fbc61ecc: Waiting
+21:53:49  cb1ff4086f82: Waiting
+21:53:49  7e18d7894ecc: Waiting
+21:53:49  6bc572a340ec: Waiting
+21:53:49  6fb6674390d8: Waiting
+21:53:49  e35c2250355d: Waiting
+21:53:49  01f2ab379e86: Waiting
+21:53:49  9824c27679d3: Waiting
+21:53:49  9adfbae99cb7: Waiting
+21:53:49  c9ebe2ff2d2c: Waiting
+21:53:49  679e36493b16: Waiting
+21:53:49  9adfbae99cb7: Layer already exists
+21:53:49  e35c2250355d: Waiting
+21:53:49  01f2ab379e86: Waiting
+21:53:49  9824c27679d3: Waiting
+21:53:49  c9ebe2ff2d2c: Waiting
+21:53:49  679e36493b16: Waiting
+21:53:49  7e18d7894ecc: Waiting
+21:53:49  6bc572a340ec: Waiting
+21:53:49  7a8a46741e18: Waiting
+21:53:49  403e3f251637: Waiting
+21:53:49  abc78660ee22: Waiting
+21:53:49  a992fbc61ecc: Waiting
+21:53:49  cb1ff4086f82: Waiting
+21:53:49  6fb6674390d8: Waiting
+21:53:49  6fb6674390d8: Waiting
+21:53:49  e35c2250355d: Waiting
+21:53:49  01f2ab379e86: Waiting
+21:53:49  9824c27679d3: Layer already exists
+21:53:49  c9ebe2ff2d2c: Waiting
+21:53:49  679e36493b16: Layer already exists
+21:53:49  6bc572a340ec: Layer already exists
+21:53:49  7a8a46741e18: Waiting
+21:53:49  403e3f251637: Layer already exists
+21:53:49  abc78660ee22: Waiting
+21:53:49  a992fbc61ecc: Waiting
+21:53:49  cb1ff4086f82: Layer already exists
+21:53:49  7e18d7894ecc: Waiting
+21:53:49  abc78660ee22: Layer already exists
+21:53:49  a992fbc61ecc: Layer already exists
+21:53:49  7e18d7894ecc: Layer already exists
+21:53:49  7a8a46741e18: Waiting
+21:53:49  6fb6674390d8: Waiting
+21:53:49  e35c2250355d: Waiting
+21:53:49  01f2ab379e86: Layer already exists
+21:53:49  c9ebe2ff2d2c: Waiting
+21:53:49  6fb6674390d8: Layer already exists
+21:53:49  e35c2250355d: Waiting
+21:53:49  c9ebe2ff2d2c: Waiting
+21:53:49  7a8a46741e18: Waiting
+21:53:49  e35c2250355d: Waiting
+21:53:49  c9ebe2ff2d2c: Waiting
+21:53:49  7a8a46741e18: Waiting
+21:53:50  7a8a46741e18: Waiting
+21:53:50  c9ebe2ff2d2c: Waiting
+21:53:50  7a8a46741e18: Waiting
+21:53:50  c9ebe2ff2d2c: Waiting
+21:53:50  c9ebe2ff2d2c: Layer already exists
+21:53:50  7a8a46741e18: Layer already exists
+21:53:51  e35c2250355d: Pushed
+21:53:53  18: digest: sha256:2845121290f50fa8cfb92f276aba890cb09b7cc215c55bae2ba028c362b92437 size: 856
+21:53:53  + docker push ****/nagapraveen-automationtesting/swasthasathi-app:latest
+21:53:54  The push refers to repository [****/nagapraveen-automationtesting/swasthasathi-app]
+21:53:54  a992fbc61ecc: Waiting
+21:53:54  6fb6674390d8: Waiting
+21:53:54  c9ebe2ff2d2c: Waiting
+21:53:54  6bc572a340ec: Waiting
+21:53:54  7a8a46741e18: Waiting
+21:53:54  9824c27679d3: Waiting
+21:53:54  e35c2250355d: Waiting
+21:53:54  abc78660ee22: Waiting
+21:53:54  9adfbae99cb7: Waiting
+21:53:54  cb1ff4086f82: Waiting
+21:53:54  679e36493b16: Waiting
+21:53:54  01f2ab379e86: Waiting
+21:53:54  7e18d7894ecc: Waiting
+21:53:54  403e3f251637: Waiting
+21:53:54  a992fbc61ecc: Waiting
+21:53:54  6fb6674390d8: Waiting
+21:53:54  c9ebe2ff2d2c: Waiting
+21:53:54  6bc572a340ec: Waiting
+21:53:54  7a8a46741e18: Waiting
+21:53:54  9824c27679d3: Waiting
+21:53:54  e35c2250355d: Waiting
+21:53:54  abc78660ee22: Waiting
+21:53:54  9adfbae99cb7: Waiting
+21:53:54  cb1ff4086f82: Waiting
+21:53:54  679e36493b16: Waiting
+21:53:54  01f2ab379e86: Waiting
+21:53:54  7e18d7894ecc: Waiting
+21:53:54  403e3f251637: Waiting
+21:53:54  a992fbc61ecc: Waiting
+21:53:54  6fb6674390d8: Waiting
+21:53:54  c9ebe2ff2d2c: Waiting
+21:53:54  6bc572a340ec: Waiting
+21:53:54  7a8a46741e18: Waiting
+21:53:54  9824c27679d3: Waiting
+21:53:54  e35c2250355d: Waiting
+21:53:54  abc78660ee22: Waiting
+21:53:54  9adfbae99cb7: Waiting
+21:53:54  cb1ff4086f82: Waiting
+21:53:54  679e36493b16: Waiting
+21:53:54  01f2ab379e86: Waiting
+21:53:54  7e18d7894ecc: Waiting
+21:53:54  403e3f251637: Waiting
+21:53:54  e35c2250355d: Waiting
+21:53:54  abc78660ee22: Waiting
+21:53:54  9adfbae99cb7: Waiting
+21:53:54  cb1ff4086f82: Waiting
+21:53:54  679e36493b16: Waiting
+21:53:54  01f2ab379e86: Waiting
+21:53:54  7e18d7894ecc: Waiting
+21:53:54  403e3f251637: Waiting
+21:53:54  a992fbc61ecc: Waiting
+21:53:54  6fb6674390d8: Waiting
+21:53:54  c9ebe2ff2d2c: Waiting
+21:53:54  6bc572a340ec: Waiting
+21:53:54  7a8a46741e18: Waiting
+21:53:54  9824c27679d3: Waiting
+21:53:54  6fb6674390d8: Waiting
+21:53:54  c9ebe2ff2d2c: Waiting
+21:53:54  6bc572a340ec: Waiting
+21:53:54  7a8a46741e18: Waiting
+21:53:54  9824c27679d3: Waiting
+21:53:54  e35c2250355d: Waiting
+21:53:54  abc78660ee22: Waiting
+21:53:54  9adfbae99cb7: Waiting
+21:53:54  cb1ff4086f82: Waiting
+21:53:54  679e36493b16: Waiting
+21:53:54  01f2ab379e86: Waiting
+21:53:54  7e18d7894ecc: Waiting
+21:53:54  403e3f251637: Waiting
+21:53:54  a992fbc61ecc: Waiting
+21:53:54  6fb6674390d8: Waiting
+21:53:54  c9ebe2ff2d2c: Waiting
+21:53:54  6bc572a340ec: Waiting
+21:53:54  7a8a46741e18: Waiting
+21:53:54  9824c27679d3: Waiting
+21:53:54  e35c2250355d: Waiting
+21:53:54  abc78660ee22: Waiting
+21:53:54  9adfbae99cb7: Waiting
+21:53:54  cb1ff4086f82: Waiting
+21:53:54  679e36493b16: Waiting
+21:53:54  01f2ab379e86: Waiting
+21:53:54  7e18d7894ecc: Waiting
+21:53:54  403e3f251637: Waiting
+21:53:54  a992fbc61ecc: Waiting
+21:53:54  a992fbc61ecc: Waiting
+21:53:54  6fb6674390d8: Waiting
+21:53:54  c9ebe2ff2d2c: Waiting
+21:53:54  6bc572a340ec: Waiting
+21:53:54  7a8a46741e18: Waiting
+21:53:54  9824c27679d3: Waiting
+21:53:54  e35c2250355d: Waiting
+21:53:54  abc78660ee22: Waiting
+21:53:54  9adfbae99cb7: Waiting
+21:53:54  cb1ff4086f82: Waiting
+21:53:54  679e36493b16: Waiting
+21:53:54  01f2ab379e86: Waiting
+21:53:54  7e18d7894ecc: Waiting
+21:53:54  403e3f251637: Waiting
+21:53:54  a992fbc61ecc: Waiting
+21:53:54  7a8a46741e18: Waiting
+21:53:54  9824c27679d3: Waiting
+21:53:54  6fb6674390d8: Waiting
+21:53:54  c9ebe2ff2d2c: Waiting
+21:53:54  6bc572a340ec: Waiting
+21:53:54  e35c2250355d: Waiting
+21:53:54  abc78660ee22: Waiting
+21:53:54  9adfbae99cb7: Waiting
+21:53:54  7e18d7894ecc: Waiting
+21:53:54  403e3f251637: Waiting
+21:53:54  cb1ff4086f82: Waiting
+21:53:54  679e36493b16: Waiting
+21:53:54  01f2ab379e86: Waiting
+21:53:55  9824c27679d3: Waiting
+21:53:55  6fb6674390d8: Waiting
+21:53:55  c9ebe2ff2d2c: Waiting
+21:53:55  6bc572a340ec: Waiting
+21:53:55  7a8a46741e18: Waiting
+21:53:55  e35c2250355d: Waiting
+21:53:55  abc78660ee22: Waiting
+21:53:55  9adfbae99cb7: Waiting
+21:53:55  403e3f251637: Waiting
+21:53:55  cb1ff4086f82: Waiting
+21:53:55  679e36493b16: Waiting
+21:53:55  01f2ab379e86: Waiting
+21:53:55  7e18d7894ecc: Waiting
+21:53:55  a992fbc61ecc: Waiting
+21:53:55  a992fbc61ecc: Waiting
+21:53:55  c9ebe2ff2d2c: Waiting
+21:53:55  6bc572a340ec: Waiting
+21:53:55  7a8a46741e18: Waiting
+21:53:55  9824c27679d3: Waiting
+21:53:55  6fb6674390d8: Waiting
+21:53:55  abc78660ee22: Waiting
+21:53:55  9adfbae99cb7: Waiting
+21:53:55  e35c2250355d: Waiting
+21:53:55  679e36493b16: Waiting
+21:53:55  01f2ab379e86: Waiting
+21:53:55  7e18d7894ecc: Waiting
+21:53:55  403e3f251637: Waiting
+21:53:55  cb1ff4086f82: Waiting
+21:53:55  01f2ab379e86: Waiting
+21:53:55  7e18d7894ecc: Waiting
+21:53:55  403e3f251637: Waiting
+21:53:55  cb1ff4086f82: Waiting
+21:53:55  679e36493b16: Waiting
+21:53:55  a992fbc61ecc: Waiting
+21:53:55  6bc572a340ec: Waiting
+21:53:55  7a8a46741e18: Waiting
+21:53:55  9824c27679d3: Waiting
+21:53:55  6fb6674390d8: Waiting
+21:53:55  c9ebe2ff2d2c: Waiting
+21:53:55  9adfbae99cb7: Waiting
+21:53:55  e35c2250355d: Waiting
+21:53:55  abc78660ee22: Waiting
+21:53:55  a992fbc61ecc: Waiting
+21:53:55  6fb6674390d8: Waiting
+21:53:55  c9ebe2ff2d2c: Waiting
+21:53:55  6bc572a340ec: Waiting
+21:53:55  7a8a46741e18: Waiting
+21:53:55  9824c27679d3: Waiting
+21:53:55  e35c2250355d: Waiting
+21:53:55  abc78660ee22: Waiting
+21:53:55  9adfbae99cb7: Waiting
+21:53:55  cb1ff4086f82: Waiting
+21:53:55  679e36493b16: Waiting
+21:53:55  01f2ab379e86: Waiting
+21:53:55  7e18d7894ecc: Waiting
+21:53:55  403e3f251637: Waiting
+21:53:55  6fb6674390d8: Waiting
+21:53:55  c9ebe2ff2d2c: Waiting
+21:53:55  6bc572a340ec: Waiting
+21:53:55  7a8a46741e18: Waiting
+21:53:55  9824c27679d3: Waiting
+21:53:55  e35c2250355d: Waiting
+21:53:55  abc78660ee22: Waiting
+21:53:55  9adfbae99cb7: Waiting
+21:53:55  cb1ff4086f82: Waiting
+21:53:55  679e36493b16: Waiting
+21:53:55  01f2ab379e86: Waiting
+21:53:55  7e18d7894ecc: Waiting
+21:53:55  403e3f251637: Waiting
+21:53:55  a992fbc61ecc: Waiting
+21:53:55  cb1ff4086f82: Waiting
+21:53:55  679e36493b16: Waiting
+21:53:55  01f2ab379e86: Waiting
+21:53:55  7e18d7894ecc: Waiting
+21:53:55  403e3f251637: Waiting
+21:53:55  a992fbc61ecc: Waiting
+21:53:55  6fb6674390d8: Waiting
+21:53:55  c9ebe2ff2d2c: Waiting
+21:53:55  6bc572a340ec: Waiting
+21:53:55  7a8a46741e18: Waiting
+21:53:55  9824c27679d3: Waiting
+21:53:55  e35c2250355d: Waiting
+21:53:55  abc78660ee22: Waiting
+21:53:55  9adfbae99cb7: Layer already exists
+21:53:55  9824c27679d3: Layer already exists
+21:53:55  6fb6674390d8: Waiting
+21:53:55  c9ebe2ff2d2c: Layer already exists
+21:53:55  6bc572a340ec: Waiting
+21:53:55  7a8a46741e18: Layer already exists
+21:53:55  e35c2250355d: Waiting
+21:53:55  abc78660ee22: Layer already exists
+21:53:55  403e3f251637: Layer already exists
+21:53:55  cb1ff4086f82: Layer already exists
+21:53:55  679e36493b16: Waiting
+21:53:55  01f2ab379e86: Waiting
+21:53:55  7e18d7894ecc: Waiting
+21:53:55  a992fbc61ecc: Waiting
+21:53:55  679e36493b16: Waiting
+21:53:55  01f2ab379e86: Waiting
+21:53:55  7e18d7894ecc: Layer already exists
+21:53:55  a992fbc61ecc: Waiting
+21:53:55  6bc572a340ec: Layer already exists
+21:53:55  6fb6674390d8: Waiting
+21:53:55  e35c2250355d: Already exists
+21:53:55  679e36493b16: Waiting
+21:53:55  01f2ab379e86: Waiting
+21:53:55  a992fbc61ecc: Waiting
+21:53:55  6fb6674390d8: Waiting
+21:53:55  a992fbc61ecc: Layer already exists
+21:53:55  6fb6674390d8: Waiting
+21:53:55  679e36493b16: Waiting
+21:53:55  01f2ab379e86: Waiting
+21:53:56  6fb6674390d8: Layer already exists
+21:53:56  679e36493b16: Layer already exists
+21:53:56  01f2ab379e86: Waiting
+21:53:56  01f2ab379e86: Waiting
+21:53:56  01f2ab379e86: Layer already exists
+21:53:58  latest: digest: sha256:2845121290f50fa8cfb92f276aba890cb09b7cc215c55bae2ba028c362b92437 size: 856
+21:53:58  + echo 'Ã¢Å“â€¦ Docker image pushed successfully'
+21:53:58  Ã¢Å“â€¦ Docker image pushed successfully
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Update Kubernetes Manifests)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+21:53:58  ðŸ“� Updating Kubernetes manifests...
+[Pipeline] dir
+21:53:58  Running in C:\Users\Praveen\.jenkins\workspace\swasthasathi-app\build-pipelines
+[Pipeline] {
+[Pipeline] sh
+21:53:59  + sed -i 's|newTag: .*|newTag: "18"|g' kustomization.yaml
+21:53:59  + echo 'Ã°Å¸â€œâ€¹ Updated manifests:'
+21:53:59  Ã°Å¸â€œâ€¹ Updated manifests:
+21:53:59  + cat kustomization.yaml
+21:53:59  + grep -A 2 images:
+21:53:59  images:
+21:53:59    - name: ****/nagapraveen-automationtesting/swasthasathi-app
+21:53:59      newTag: "18"
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy to Kubernetes)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+21:53:59  ðŸš€ Deploying to Kubernetes...
+[Pipeline] withCredentials
+21:53:59  Masking supported pattern matches of %REGISTRY_PASS%
+[Pipeline] {
+[Pipeline] withKubeConfig
+[Pipeline] {
+[Pipeline] dir
+21:53:59  Running in C:\Users\Praveen\.jenkins\workspace\swasthasathi-app\build-pipelines
+[Pipeline] {
+[Pipeline] sh
+21:53:59  Warning: A secret was passed to "sh" using Groovy String interpolation, which is insecure.
+21:53:59  		 Affected argument(s) used the following variable(s): [DOCKER_REGISTRY]
+21:53:59  		 See https://jenkins.io/redirect/groovy-string-interpolation for details.
+21:54:00  + kubectl cluster-info
+21:54:00  Kubernetes control plane is running at https://localhost:6443
+21:54:00  CoreDNS is running at https://localhost:6443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+21:54:00  
+21:54:00  To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+21:54:00  + kubectl create namespace swasthasathi --dry-run=client -o yaml
+21:54:00  + kubectl apply -f -
+21:54:01  namespace/swasthasathi configured
+21:54:01  + kubectl create secret docker-registry ghcr-secret --namespace=swasthasathi --docker-server=**** --docker-username=nagapraveen-automationtesting --docker-password=**** --dry-run=client -o yaml
+21:54:01  + kubectl apply -f -
+21:54:01  secret/ghcr-secret configured
+21:54:01  + kubectl apply -k .
+21:54:02  namespace/swasthasathi configured
+21:54:02  configmap/swasthasathi-app-config unchanged
+21:54:03  service/swasthasathi-app-loadbalancer unchanged
+21:54:03  service/swasthasathi-app-service unchanged
+21:54:03  deployment.apps/swasthasathi-app configured
+21:54:03  ingress.networking.k8s.io/swasthasathi-app-ingress unchanged
+21:54:03  + echo 'Ã¢ï¿½Â³ Waiting for deployment to be ready...'
+21:54:03  Ã¢ï¿½Â³ Waiting for deployment to be ready...
+21:54:03  + kubectl rollout status deployment/swasthasathi-app -n swasthasathi --timeout=300s
+21:54:03  Waiting for deployment "swasthasathi-app" rollout to finish: 2 old replicas are pending termination...
+21:59:03  error: timed out waiting for the condition
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+21:59:03  [kubernetes-cli] kubectl configuration cleaned up
+[Pipeline] // withKubeConfig
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Health Check)
+Stage "Health Check" skipped due to earlier failure(s)
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+21:59:04  ðŸ§¹ Cleaning up...
+[Pipeline] sh
+21:59:04  Warning: A secret was passed to "sh" using Groovy String interpolation, which is insecure.
+21:59:04  		 Affected argument(s) used the following variable(s): [DOCKER_REGISTRY]
+21:59:04  		 See https://jenkins.io/redirect/groovy-string-interpolation for details.
+21:59:05  + docker rmi ****/nagapraveen-automationtesting/swasthasathi-app:18
+21:59:05  Untagged: ****/nagapraveen-automationtesting/swasthasathi-app:18
+21:59:05  + docker rmi ****/nagapraveen-automationtesting/swasthasathi-app:latest
+21:59:06  Error response from daemon: conflict: unable to delete ****/nagapraveen-automationtesting/swasthasathi-app:latest (must be forced) - container 719c2af1f962 is using its referenced image 2845121290f5
+21:59:06  + true
+21:59:06  + docker system prune -f
+21:59:07  Deleted Containers:
+21:59:07  6e4e659a42946be8bf8077776f646e7aa4732c98c154ef5f34da4f01cc856810
+21:59:07  719c2af1f962c7c42727425dc7ad468db97c02dda56bbdcb7b12e59e0287b59a
+21:59:07  b6050be159406c16ca8af2cbd3967de6ee4e9fd9d02a8d5bd433b53eedce5997
+21:59:07  8b232b21517b0292a4e9aff5c2346242afd332288fb26ac0046a3d025ca9e05d
+21:59:07  cc43018e82bc3eff4a09df595fa909c112376d7f0d08495e1c1e5b9662cb60ce
+21:59:07  
+21:59:10  Deleted build cache objects:
+21:59:10  lpova8fsswrlwjk3lg12qbekt
+21:59:10  juzzdb75vajyuau7ougq3vkvw
+21:59:10  hsdh9z378iv4ab4d0wc8n96ew
+21:59:10  zi3j15nt7fv62gu6freoqslqo
+21:59:10  zc98pgw9twgc9zwyotvqp7in4
+21:59:10  f1oohfakn9p6be3djxafsnqvw
+21:59:10  52az9x92fekxkxci92q63nntb
+21:59:10  fywngfe9qhnpewtfza4e42mls
+21:59:10  ljw0l5anywe4jbbjmws2gmmdv
+21:59:10  ytxmpgow4nwyw66o0rxjvgsp9
+21:59:10  lo5hgi4jqpd6ny4py4du48m8w
+21:59:10  onnhwaj3auuixskacoudurads
+21:59:10  
+21:59:10  Total reclaimed space: 397.9MB
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+21:59:10  â�Œ Pipeline failed!
+[Pipeline] withKubeConfig
+[Pipeline] {
+[Pipeline] sh
+21:59:11  + echo 'Ã°Å¸â€�ï¿½ Debugging information:'
+21:59:11  Ã°Å¸â€�ï¿½ Debugging information:
+21:59:11  + kubectl get pods -n swasthasathi -l app=swasthasathi-app
+21:59:11  NAME                                READY   STATUS             RESTARTS        AGE
+21:59:11  swasthasathi-app-86499578dc-fpn82   0/1     CrashLoopBackOff   5 (92s ago)     5m8s
+21:59:11  swasthasathi-app-86499578dc-llg8x   0/1     CrashLoopBackOff   5 (94s ago)     5m8s
+21:59:11  swasthasathi-app-86499578dc-rv5sg   0/1     CrashLoopBackOff   5 (85s ago)     5m8s
+21:59:11  swasthasathi-app-c84dcc9dc-br249    0/1     CrashLoopBackOff   9 (5m ago)      23m
+21:59:11  swasthasathi-app-c84dcc9dc-lw5w7    0/1     CrashLoopBackOff   9 (4m51s ago)   23m
+21:59:11  + kubectl describe pods -n swasthasathi -l app=swasthasathi-app
+21:59:12  Name:             swasthasathi-app-86499578dc-fpn82
+21:59:12  Namespace:        swasthasathi
+21:59:12  Priority:         0
+21:59:12  Service Account:  default
+21:59:12  Node:             docker-desktop/192.168.65.3
+21:59:12  Start Time:       Tue, 30 Sep 2025 21:54:03 +0530
+21:59:12  Labels:           app=swasthasathi-app
+21:59:12                    managed-by=jenkins
+21:59:12                    pod-template-hash=86499578dc
+21:59:12                    version=v1
+21:59:12  Annotations:      <none>
+21:59:12  Status:           Running
+21:59:12  IP:               10.1.0.202
+21:59:12  IPs:
+21:59:12    IP:           10.1.0.202
+21:59:12  Controlled By:  ReplicaSet/swasthasathi-app-86499578dc
+21:59:12  Containers:
+21:59:12    swasthasathi-app:
+21:59:12      Container ID:   docker://719c2af1f962c7c42727425dc7ad468db97c02dda56bbdcb7b12e59e0287b59a
+21:59:12      Image:          ****/nagapraveen-automationtesting/swasthasathi-app:18
+21:59:12      Image ID:       docker-pullable://****/nagapraveen-automationtesting/swasthasathi-app@sha256:2845121290f50fa8cfb92f276aba890cb09b7cc215c55bae2ba028c362b92437
+21:59:12      Port:           5000/TCP
+21:59:12      Host Port:      0/TCP
+21:59:12      State:          Waiting
+21:59:12        Reason:       CrashLoopBackOff
+21:59:12      Last State:     Terminated
+21:59:12        Reason:       Error
+21:59:12        Exit Code:    1
+21:59:12        Started:      Tue, 30 Sep 2025 21:57:38 +0530
+21:59:12        Finished:     Tue, 30 Sep 2025 21:57:39 +0530
+21:59:12      Ready:          False
+21:59:12      Restart Count:  5
+21:59:12      Limits:
+21:59:12        cpu:     200m
+21:59:12        memory:  256Mi
+21:59:12      Requests:
+21:59:12        cpu:      50m
+21:59:12        memory:   64Mi
+21:59:12      Liveness:   http-get http://:5000/health delay=30s timeout=5s period=10s #success=1 #failure=3
+21:59:12      Readiness:  http-get http://:5000/health delay=5s timeout=3s period=5s #success=1 #failure=3
+21:59:12      Environment:
+21:59:12        NODE_ENV:            production
+21:59:12        VITE_APP_BASE_PATH:  /swasthasathi-app/
+21:59:12      Mounts:
+21:59:12        /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-llv76 (ro)
+21:59:12  Conditions:
+21:59:12    Type                        Status
+21:59:12    PodReadyToStartContainers   True 
+21:59:12    Initialized                 True 
+21:59:12    Ready                       False 
+21:59:12    ContainersReady             False 
+21:59:12    PodScheduled                True 
+21:59:12  Volumes:
+21:59:12    kube-api-access-llv76:
+21:59:12      Type:                    Projected (a volume that contains injected data from multiple sources)
+21:59:12      TokenExpirationSeconds:  3607
+21:59:12      ConfigMapName:           kube-root-ca.crt
+21:59:12      ConfigMapOptional:       <nil>
+21:59:12      DownwardAPI:             true
+21:59:12  QoS Class:                   Burstable
+21:59:12  Node-Selectors:              <none>
+21:59:12  Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+21:59:12                               node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+21:59:12  Events:
+21:59:12    Type     Reason     Age                    From               Message
+21:59:12    ----     ------     ----                   ----               -------
+21:59:12    Normal   Scheduled  5m8s                   default-scheduler  Successfully assigned swasthasathi/swasthasathi-app-86499578dc-fpn82 to docker-desktop
+21:59:12    Normal   Pulled     5m5s                   kubelet            Successfully pulled image "****/nagapraveen-automationtesting/swasthasathi-app:18" in 2.345s (2.345s including waiting). Image size: 22971535 bytes.
+21:59:12    Normal   Pulled     4m55s                  kubelet            Successfully pulled image "****/nagapraveen-automationtesting/swasthasathi-app:18" in 2.242s (7.669s including waiting). Image size: 22971535 bytes.
+21:59:12    Normal   Pulled     4m26s                  kubelet            Successfully pulled image "****/nagapraveen-automationtesting/swasthasathi-app:18" in 3.463s (5.738s including waiting). Image size: 22971535 bytes.
+21:59:12    Normal   Pulling    4m4s (x4 over 5m7s)    kubelet            Pulling image "****/nagapraveen-automationtesting/swasthasathi-app:18"
+21:59:12    Normal   Created    4m2s (x4 over 5m5s)    kubelet            Created container swasthasathi-app
+21:59:12    Normal   Pulled     4m2s                   kubelet            Successfully pulled image "****/nagapraveen-automationtesting/swasthasathi-app:18" in 2.46s (2.46s including waiting). Image size: 22971535 bytes.
+21:59:12    Normal   Started    4m1s (x4 over 5m4s)    kubelet            Started container swasthasathi-app
+21:59:12    Warning  BackOff    3m56s (x9 over 4m54s)  kubelet            Back-off restarting failed container swasthasathi-app in pod swasthasathi-app-86499578dc-fpn82_swasthasathi(1465265c-7d15-4546-9728-4f5d6e6dbb0a)
+21:59:12  
+21:59:12  
+21:59:12  Name:             swasthasathi-app-86499578dc-llg8x
+21:59:12  Namespace:        swasthasathi
+21:59:12  Priority:         0
+21:59:12  Service Account:  default
+21:59:12  Node:             docker-desktop/192.168.65.3
+21:59:12  Start Time:       Tue, 30 Sep 2025 21:54:03 +0530
+21:59:12  Labels:           app=swasthasathi-app
+21:59:12                    managed-by=jenkins
+21:59:12                    pod-template-hash=86499578dc
+21:59:12                    version=v1
+21:59:12  Annotations:      <none>
+21:59:12  Status:           Running
+21:59:12  IP:               10.1.0.203
+21:59:12  IPs:
+21:59:12    IP:           10.1.0.203
+21:59:12  Controlled By:  ReplicaSet/swasthasathi-app-86499578dc
+21:59:12  Containers:
+21:59:12    swasthasathi-app:
+21:59:12      Container ID:   docker://b6050be159406c16ca8af2cbd3967de6ee4e9fd9d02a8d5bd433b53eedce5997
+21:59:12      Image:          ****/nagapraveen-automationtesting/swasthasathi-app:18
+21:59:12      Image ID:       docker-pullable://****/nagapraveen-automationtesting/swasthasathi-app@sha256:2845121290f50fa8cfb92f276aba890cb09b7cc215c55bae2ba028c362b92437
+21:59:12      Port:           5000/TCP
+21:59:12      Host Port:      0/TCP
+21:59:12      State:          Waiting
+21:59:12        Reason:       CrashLoopBackOff
+21:59:12      Last State:     Terminated
+21:59:12        Reason:       Error
+21:59:12        Exit Code:    1
+21:59:12        Started:      Tue, 30 Sep 2025 21:57:36 +0530
+21:59:12        Finished:     Tue, 30 Sep 2025 21:57:37 +0530
+21:59:12      Ready:          False
+21:59:12      Restart Count:  5
+21:59:12      Limits:
+21:59:12        cpu:     200m
+21:59:12        memory:  256Mi
+21:59:12      Requests:
+21:59:12        cpu:      50m
+21:59:12        memory:   64Mi
+21:59:12      Liveness:   http-get http://:5000/health delay=30s timeout=5s period=10s #success=1 #failure=3
+21:59:12      Readiness:  http-get http://:5000/health delay=5s timeout=3s period=5s #success=1 #failure=3
+21:59:12      Environment:
+21:59:12        NODE_ENV:            production
+21:59:12        VITE_APP_BASE_PATH:  /swasthasathi-app/
+21:59:12      Mounts:
+21:59:12        /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-b58k2 (ro)
+21:59:12  Conditions:
+21:59:12    Type                        Status
+21:59:12    PodReadyToStartContainers   True 
+21:59:12    Initialized                 True 
+21:59:12    Ready                       False 
+21:59:12    ContainersReady             False 
+21:59:12    PodScheduled                True 
+21:59:12  Volumes:
+21:59:12    kube-api-access-b58k2:
+21:59:12      Type:                    Projected (a volume that contains injected data from multiple sources)
+21:59:12      TokenExpirationSeconds:  3607
+21:59:12      ConfigMapName:           kube-root-ca.crt
+21:59:12      ConfigMapOptional:       <nil>
+21:59:12      DownwardAPI:             true
+21:59:12  QoS Class:                   Burstable
+21:59:12  Node-Selectors:              <none>
+21:59:12  Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+21:59:12                               node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+21:59:12  Events:
+21:59:12    Type     Reason     Age                    From               Message
+21:59:12    ----     ------     ----                   ----               -------
+21:59:12    Normal   Scheduled  5m8s                   default-scheduler  Successfully assigned swasthasathi/swasthasathi-app-86499578dc-llg8x to docker-desktop
+21:59:12    Normal   Pulled     5m                     kubelet            Successfully pulled image "****/nagapraveen-automationtesting/swasthasathi-app:18" in 2.349s (7.619s including waiting). Image size: 22971535 bytes.
+21:59:12    Normal   Pulled     4m50s                  kubelet            Successfully pulled image "****/nagapraveen-automationtesting/swasthasathi-app:18" in 2.036s (5.504s including waiting). Image size: 22971535 bytes.
+21:59:12    Normal   Pulled     4m29s                  kubelet            Successfully pulled image "****/nagapraveen-automationtesting/swasthasathi-app:18" in 4.323s (4.323s including waiting). Image size: 22971535 bytes.
+21:59:12    Normal   Pulling    4m3s (x4 over 5m7s)    kubelet            Pulling image "****/nagapraveen-automationtesting/swasthasathi-app:18"
+21:59:12    Normal   Created    3m59s (x4 over 4m59s)  kubelet            Created container swasthasathi-app
+21:59:12    Normal   Started    3m59s (x4 over 4m59s)  kubelet            Started container swasthasathi-app
+21:59:12    Normal   Pulled     3m59s                  kubelet            Successfully pulled image "****/nagapraveen-automationtesting/swasthasathi-app:18" in 2.63s (4.085s including waiting). Image size: 22971535 bytes.
+21:59:12    Warning  BackOff    3m49s (x9 over 4m49s)  kubelet            Back-off restarting failed container swasthasathi-app in pod swasthasathi-app-86499578dc-llg8x_swasthasathi(ac45a216-2f20-40ad-8f13-1014d236660f)
+21:59:12  
+21:59:12  
+21:59:12  Name:             swasthasathi-app-86499578dc-rv5sg
+21:59:12  Namespace:        swasthasathi
+21:59:12  Priority:         0
+21:59:12  Service Account:  default
+21:59:12  Node:             docker-desktop/192.168.65.3
+21:59:12  Start Time:       Tue, 30 Sep 2025 21:54:03 +0530
+21:59:12  Labels:           app=swasthasathi-app
+21:59:12                    managed-by=jenkins
+21:59:12                    pod-template-hash=86499578dc
+21:59:12                    version=v1
+21:59:12  Annotations:      <none>
+21:59:12  Status:           Running
+21:59:12  IP:               10.1.0.204
+21:59:12  IPs:
+21:59:12    IP:           10.1.0.204
+21:59:12  Controlled By:  ReplicaSet/swasthasathi-app-86499578dc
+21:59:12  Containers:
+21:59:12    swasthasathi-app:
+21:59:12      Container ID:   docker://6e4e659a42946be8bf8077776f646e7aa4732c98c154ef5f34da4f01cc856810
+21:59:12      Image:          ****/nagapraveen-automationtesting/swasthasathi-app:18
+21:59:12      Image ID:       docker-pullable://****/nagapraveen-automationtesting/swasthasathi-app@sha256:2845121290f50fa8cfb92f276aba890cb09b7cc215c55bae2ba028c362b92437
+21:59:12      Port:           5000/TCP
+21:59:12      Host Port:      0/TCP
+21:59:12      State:          Waiting
+21:59:12        Reason:       CrashLoopBackOff
+21:59:12      Last State:     Terminated
+21:59:12        Reason:       Error
+21:59:12        Exit Code:    1
+21:59:12        Started:      Tue, 30 Sep 2025 21:57:46 +0530
+21:59:12        Finished:     Tue, 30 Sep 2025 21:57:46 +0530
+21:59:12      Ready:          False
+21:59:12      Restart Count:  5
+21:59:12      Limits:
+21:59:12        cpu:     200m
+21:59:12        memory:  256Mi
+21:59:12      Requests:
+21:59:12        cpu:      50m
+21:59:12        memory:   64Mi
+21:59:12      Liveness:   http-get http://:5000/health delay=30s timeout=5s period=10s #success=1 #failure=3
+21:59:12      Readiness:  http-get http://:5000/health delay=5s timeout=3s period=5s #success=1 #failure=3
+21:59:12      Environment:
+21:59:12        NODE_ENV:            production
+21:59:12        VITE_APP_BASE_PATH:  /swasthasathi-app/
+21:59:12      Mounts:
+21:59:12        /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-jvtgn (ro)
+21:59:12  Conditions:
+21:59:12    Type                        Status
+21:59:12    PodReadyToStartContainers   True 
+21:59:12    Initialized                 True 
+21:59:12    Ready                       False 
+21:59:12    ContainersReady             False 
+21:59:12    PodScheduled                True 
+21:59:12  Volumes:
+21:59:12    kube-api-access-jvtgn:
+21:59:12      Type:                    Projected (a volume that contains injected data from multiple sources)
+21:59:12      TokenExpirationSeconds:  3607
+21:59:12      ConfigMapName:           kube-root-ca.crt
+21:59:12      ConfigMapOptional:       <nil>
+21:59:12      DownwardAPI:             true
+21:59:12  QoS Class:                   Burstable
+21:59:12  Node-Selectors:              <none>
+21:59:12  Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+21:59:12                               node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+21:59:12  Events:
+21:59:12    Type     Reason     Age                    From               Message
+21:59:12    ----     ------     ----                   ----               -------
+21:59:12    Normal   Scheduled  5m8s                   default-scheduler  Successfully assigned swasthasathi/swasthasathi-app-86499578dc-rv5sg to docker-desktop
+21:59:12    Normal   Pulled     4m57s                  kubelet            Successfully pulled image "****/nagapraveen-automationtesting/swasthasathi-app:18" in 2.639s (10.242s including waiting). Image size: 22971535 bytes.
+21:59:12    Normal   Pulled     4m48s                  kubelet            Successfully pulled image "****/nagapraveen-automationtesting/swasthasathi-app:18" in 2.261s (5.602s including waiting). Image size: 22971535 bytes.
+21:59:12    Normal   Pulled     4m21s                  kubelet            Successfully pulled image "****/nagapraveen-automationtesting/swasthasathi-app:18" in 2.233s (2.233s including waiting). Image size: 22971535 bytes.
+21:59:12    Normal   Pulling    3m47s (x4 over 5m7s)   kubelet            Pulling image "****/nagapraveen-automationtesting/swasthasathi-app:18"
+21:59:12    Normal   Created    3m45s (x4 over 4m57s)  kubelet            Created container swasthasathi-app
+21:59:12    Normal   Started    3m45s (x4 over 4m56s)  kubelet            Started container swasthasathi-app
+21:59:12    Normal   Pulled     3m45s                  kubelet            Successfully pulled image "****/nagapraveen-automationtesting/swasthasathi-app:18" in 2.006s (2.006s including waiting). Image size: 22971535 bytes.
+21:59:12    Warning  BackOff    3m44s (x9 over 4m46s)  kubelet            Back-off restarting failed container swasthasathi-app in pod swasthasathi-app-86499578dc-rv5sg_swasthasathi(1282adb6-3c27-46fd-8fec-eee9ea5869da)
+21:59:12  
+21:59:12  
+21:59:12  Name:             swasthasathi-app-c84dcc9dc-br249
+21:59:12  Namespace:        swasthasathi
+21:59:12  Priority:         0
+21:59:12  Service Account:  default
+21:59:12  Node:             docker-desktop/192.168.65.3
+21:59:12  Start Time:       Tue, 30 Sep 2025 21:35:46 +0530
+21:59:12  Labels:           app=swasthasathi-app
+21:59:12                    managed-by=jenkins
+21:59:12                    pod-template-hash=c84dcc9dc
+21:59:12                    version=v1
+21:59:12  Annotations:      <none>
+21:59:12  Status:           Running
+21:59:12  IP:               10.1.0.199
+21:59:12  IPs:
+21:59:12    IP:           10.1.0.199
+21:59:12  Controlled By:  ReplicaSet/swasthasathi-app-c84dcc9dc
+21:59:12  Containers:
+21:59:12    swasthasathi-app:
+21:59:12      Container ID:   docker://cc43018e82bc3eff4a09df595fa909c112376d7f0d08495e1c1e5b9662cb60ce
+21:59:12      Image:          ****/nagapraveen-automationtesting/swasthasathi-app:17
+21:59:12      Image ID:       docker-pullable://****/nagapraveen-automationtesting/swasthasathi-app@sha256:82c793b58bfaa27f8f737383cfc795f24498872dabd5d540495899d9fef2e75b
+21:59:12      Port:           5000/TCP
+21:59:12      Host Port:      0/TCP
+21:59:12      State:          Waiting
+21:59:12        Reason:       CrashLoopBackOff
+21:59:12      Last State:     Terminated
+21:59:12        Reason:       Error
+21:59:12        Exit Code:    1
+21:59:12        Started:      Tue, 30 Sep 2025 21:54:10 +0530
+21:59:12        Finished:     Tue, 30 Sep 2025 21:54:11 +0530
+21:59:12      Ready:          False
+21:59:12      Restart Count:  9
+21:59:12      Limits:
+21:59:12        cpu:     200m
+21:59:12        memory:  256Mi
+21:59:12      Requests:
+21:59:12        cpu:      50m
+21:59:12        memory:   64Mi
+21:59:12      Liveness:   http-get http://:5000/health delay=30s timeout=5s period=10s #success=1 #failure=3
+21:59:12      Readiness:  http-get http://:5000/health delay=5s timeout=3s period=5s #success=1 #failure=3
+21:59:12      Environment:
+21:59:12        NODE_ENV:            production
+21:59:12        VITE_APP_BASE_PATH:  /swasthasathi-app/
+21:59:12      Mounts:
+21:59:12        /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-czp6n (ro)
+21:59:12  Conditions:
+21:59:12    Type                        Status
+21:59:12    PodReadyToStartContainers   True 
+21:59:12    Initialized                 True 
+21:59:12    Ready                       False 
+21:59:12    ContainersReady             False 
+21:59:12    PodScheduled                True 
+21:59:12  Volumes:
+21:59:12    kube-api-access-czp6n:
+21:59:12      Type:                    Projected (a volume that contains injected data from multiple sources)
+21:59:12      TokenExpirationSeconds:  3607
+21:59:12      ConfigMapName:           kube-root-ca.crt
+21:59:12      ConfigMapOptional:       <nil>
+21:59:12      DownwardAPI:             true
+21:59:12  QoS Class:                   Burstable
+21:59:12  Node-Selectors:              <none>
+21:59:12  Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+21:59:12                               node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+21:59:12  Events:
+21:59:12    Type     Reason     Age                    From               Message
+21:59:12    ----     ------     ----                   ----               -------
+21:59:12    Normal   Scheduled  23m                    default-scheduler  Successfully assigned swasthasathi/swasthasathi-app-c84dcc9dc-br249 to docker-desktop
+21:59:12    Normal   Pulled     23m                    kubelet            Successfully pulled image "****/nagapraveen-automationtesting/swasthasathi-app:17" in 2.565s (2.565s including waiting). Image size: 22971535 bytes.
+21:59:12    Normal   Pulled     23m                    kubelet            Successfully pulled image "****/nagapraveen-automationtesting/swasthasathi-app:17" in 2.079s (4.494s including waiting). Image size: 22971535 bytes.
+21:59:12    Normal   Pulled     22m                    kubelet            Successfully pulled image "****/nagapraveen-automationtesting/swasthasathi-app:17" in 2.448s (2.449s including waiting). Image size: 22971535 bytes.
+21:59:12    Normal   Created    22m (x4 over 23m)      kubelet            Created container swasthasathi-app
+21:59:12    Normal   Pulled     22m                    kubelet            Successfully pulled image "****/nagapraveen-automationtesting/swasthasathi-app:17" in 2.806s (4.978s including waiting). Image size: 22971535 bytes.
+21:59:12    Normal   Started    22m (x4 over 23m)      kubelet            Started container swasthasathi-app
+21:59:12    Normal   Pulling    18m (x7 over 23m)      kubelet            Pulling image "****/nagapraveen-automationtesting/swasthasathi-app:17"
+21:59:12    Warning  BackOff    3m24s (x107 over 23m)  kubelet            Back-off restarting failed container swasthasathi-app in pod swasthasathi-app-c84dcc9dc-br249_swasthasathi(5a4ef4df-d40b-416c-83ad-4b5e5e7725ec)
+21:59:12  
+21:59:12  
+21:59:12  Name:             swasthasathi-app-c84dcc9dc-lw5w7
+21:59:12  Namespace:        swasthasathi
+21:59:12  Priority:         0
+21:59:12  Service Account:  default
+21:59:12  Node:             docker-desktop/192.168.65.3
+21:59:12  Start Time:       Tue, 30 Sep 2025 21:35:46 +0530
+21:59:12  Labels:           app=swasthasathi-app
+21:59:12                    managed-by=jenkins
+21:59:12                    pod-template-hash=c84dcc9dc
+21:59:12                    version=v1
+21:59:12  Annotations:      <none>
+21:59:12  Status:           Running
+21:59:12  IP:               10.1.0.200
+21:59:12  IPs:
+21:59:12    IP:           10.1.0.200
+21:59:12  Controlled By:  ReplicaSet/swasthasathi-app-c84dcc9dc
+21:59:12  Containers:
+21:59:12    swasthasathi-app:
+21:59:12      Container ID:   docker://8b232b21517b0292a4e9aff5c2346242afd332288fb26ac0046a3d025ca9e05d
+21:59:12      Image:          ****/nagapraveen-automationtesting/swasthasathi-app:17
+21:59:12      Image ID:       docker-pullable://****/nagapraveen-automationtesting/swasthasathi-app@sha256:82c793b58bfaa27f8f737383cfc795f24498872dabd5d540495899d9fef2e75b
+21:59:12      Port:           5000/TCP
+21:59:12      Host Port:      0/TCP
+21:59:12      State:          Waiting
+21:59:12        Reason:       CrashLoopBackOff
+21:59:12      Last State:     Terminated
+21:59:12        Reason:       Error
+21:59:12        Exit Code:    1
+21:59:12        Started:      Tue, 30 Sep 2025 21:54:20 +0530
+21:59:12        Finished:     Tue, 30 Sep 2025 21:54:20 +0530
+21:59:12      Ready:          False
+21:59:12      Restart Count:  9
+21:59:12      Limits:
+21:59:12        cpu:     200m
+21:59:12        memory:  256Mi
+21:59:12      Requests:
+21:59:12        cpu:      50m
+21:59:12        memory:   64Mi
+21:59:12      Liveness:   http-get http://:5000/health delay=30s timeout=5s period=10s #success=1 #failure=3
+21:59:12      Readiness:  http-get http://:5000/health delay=5s timeout=3s period=5s #success=1 #failure=3
+21:59:12      Environment:
+21:59:12        NODE_ENV:            production
+21:59:12        VITE_APP_BASE_PATH:  /swasthasathi-app/
+21:59:12      Mounts:
+21:59:12        /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-99jxw (ro)
+21:59:12  Conditions:
+21:59:12    Type                        Status
+21:59:12    PodReadyToStartContainers   True 
+21:59:12    Initialized                 True 
+21:59:12    Ready                       False 
+21:59:12    ContainersReady             False 
+21:59:12    PodScheduled                True 
+21:59:12  Volumes:
+21:59:12    kube-api-access-99jxw:
+21:59:12      Type:                    Projected (a volume that contains injected data from multiple sources)
+21:59:12      TokenExpirationSeconds:  3607
+21:59:12      ConfigMapName:           kube-root-ca.crt
+21:59:12      ConfigMapOptional:       <nil>
+21:59:12      DownwardAPI:             true
+21:59:12  QoS Class:                   Burstable
+21:59:12  Node-Selectors:              <none>
+21:59:12  Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+21:59:12                               node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+21:59:12  Events:
+21:59:12    Type     Reason     Age                    From               Message
+21:59:12    ----     ------     ----                   ----               -------
+21:59:12    Normal   Scheduled  23m                    default-scheduler  Successfully assigned swasthasathi/swasthasathi-app-c84dcc9dc-lw5w7 to docker-desktop
+21:59:12    Normal   Pulled     23m                    kubelet            Successfully pulled image "****/nagapraveen-automationtesting/swasthasathi-app:17" in 2.868s (5.419s including waiting). Image size: 22971535 bytes.
+21:59:12    Normal   Pulled     23m                    kubelet            Successfully pulled image "****/nagapraveen-automationtesting/swasthasathi-app:17" in 2.445s (5.062s including waiting). Image size: 22971535 bytes.
+21:59:12    Normal   Pulled     22m                    kubelet            Successfully pulled image "****/nagapraveen-automationtesting/swasthasathi-app:17" in 2.998s (3.45s including waiting). Image size: 22971535 bytes.
+21:59:12    Normal   Created    22m (x4 over 23m)      kubelet            Created container swasthasathi-app
+21:59:12    Normal   Started    22m (x4 over 23m)      kubelet            Started container swasthasathi-app
+21:59:12    Normal   Pulled     22m                    kubelet            Successfully pulled image "****/nagapraveen-automationtesting/swasthasathi-app:17" in 2.588s (2.588s including waiting). Image size: 22971535 bytes.
+21:59:12    Normal   Pulling    18m (x7 over 23m)      kubelet            Pulling image "****/nagapraveen-automationtesting/swasthasathi-app:17"
+21:59:12    Warning  BackOff    3m25s (x103 over 23m)  kubelet            Back-off restarting failed container swasthasathi-app in pod swasthasathi-app-c84dcc9dc-lw5w7_swasthasathi(4e435851-b088-4a5d-92c2-752c09a0f25c)
+21:59:12  + kubectl logs -n swasthasathi -l app=swasthasathi-app --tail=50
+21:59:12  unable to retrieve container logs for docker://719c2af1f962c7c42727425dc7ad468db97c02dda56bbdcb7b12e59e0287b59aunable to retrieve container logs for docker://b6050be159406c16ca8af2cbd3967de6ee4e9fd9d02a8d5bd433b53eedce5997unable to retrieve container logs for docker://6e4e659a42946be8bf8077776f646e7aa4732c98c154ef5f34da4f01cc856810unable to retrieve container logs for docker://cc43018e82bc3eff4a09df595fa909c112376d7f0d08495e1c1e5b9662cb60ceunable to retrieve container logs for docker://8b232b21517b0292a4e9aff5c2346242afd332288fb26ac0046a3d025ca9e05d
+[Pipeline] }
+21:59:12  [kubernetes-cli] kubectl configuration cleaned up
+[Pipeline] // withKubeConfig
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // timestamps
+[Pipeline] }
+[Pipeline] // timeout
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+ERROR: script returned exit code 1
+Finished: FAILURE
