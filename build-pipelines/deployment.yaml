@@ -65,8 +65,7 @@ spec:
           successThreshold: 1
           failureThreshold: 3
         securityContext:
-          runAsNonRoot: true
-          runAsUser: 1001
+          runAsNonRoot: false
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: false
           capabilities:
@@ -74,7 +73,5 @@ spec:
             - ALL
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
-      securityContext:
-        fsGroup: 1001
 ---
 
