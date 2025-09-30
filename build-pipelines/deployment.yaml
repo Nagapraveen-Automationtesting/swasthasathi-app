@@ -71,6 +71,9 @@ spec:
           capabilities:
             drop:
             - ALL
+        env:
+        - name: NGINX_ENTRYPOINT_QUIET_LOGS
+          value: "1"
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
 ---
