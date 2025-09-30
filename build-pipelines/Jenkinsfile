@@ -161,7 +161,8 @@ pipeline {
                 script {
                     echo "🚀 Deploying to Kubernetes..."
                     // Option 1: Using kubeconfig (current method)
-                    withKubeConfig([credentialsId: 'kubeconfig']) {
+                    withCredentials([usernamePassword(credentialsId: 'docker-registry-credentials', usernameVariable: 'REGISTRY_USER', passwordVariable: 'REGISTRY_PASS')]) {
+                        withKubeConfig([credentialsId: 'kubeconfig']) {
                         dir('build-pipelines') {
                             sh """
                                 # Verify kubectl connectivity
@@ -169,6 +170,14 @@ pipeline {
                                 
                                 # Create namespace if it doesn't exist
                                 kubectl create namespace ${NAMESPACE} --dry-run=client -o yaml | kubectl apply -f -
+                                
+                                # Create image pull secret for private registry
+                                kubectl create secret docker-registry ghcr-secret \
+                                    --namespace=${NAMESPACE} \
+                                    --docker-server=${DOCKER_REGISTRY} \
+                                    --docker-username=\$REGISTRY_USER \
+                                    --docker-password=\$REGISTRY_PASS \
+                                    --dry-run=client -o yaml | kubectl apply -f -
                                 
                                 # Apply manifests using kustomize
                                 kubectl apply -k .

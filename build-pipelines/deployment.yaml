@@ -22,6 +22,8 @@ spec:
         app: swasthasathi-app
         version: v1
     spec:
+      imagePullSecrets:
+      - name: ghcr-secret
       containers:
       - name: swasthasathi-app
         image: ghcr.io/nagapraveen-automationtesting/swasthasathi-app:latest  # This will be replaced by Jenkins with actual image tag
