@@ -65,24 +65,13 @@ spec:
           successThreshold: 1
           failureThreshold: 3
         securityContext:
-          runAsNonRoot: true
-          runAsUser: 101
+          runAsNonRoot: false
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: false
           capabilities:
             drop:
             - ALL
-        volumeMounts:
-        - name: nginx-cache
-          mountPath: /var/cache/nginx
-        - name: nginx-tmp
-          mountPath: /var/run
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
-      volumes:
-      - name: nginx-cache
-        emptyDir: {}
-      - name: nginx-tmp
-        emptyDir: {}
 ---
 
