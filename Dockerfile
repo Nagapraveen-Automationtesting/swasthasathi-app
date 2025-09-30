@@ -12,7 +12,7 @@ RUN npm run build
 
 FROM nginx:alpine as production-stage
 
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx-minimal.conf /etc/nginx/conf.d/default.conf
 
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 
