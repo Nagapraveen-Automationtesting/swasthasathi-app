@@ -13,8 +13,6 @@ export default function Navbar() {
 
   const hideNavbar = ['/login', '/signup'].includes(location.pathname);
 
-  if (hideNavbar) return null;
-
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -28,6 +26,8 @@ export default function Navbar() {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  if (hideNavbar) return null;
 
   const handleLogoClick = () => {
     navigate('/');
