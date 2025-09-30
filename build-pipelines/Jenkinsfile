@@ -2,10 +2,11 @@ pipeline {
     agent any
     
     environment {
-        // Docker registry configuration
-        DOCKER_REGISTRY = credentials('docker-registry-url') // Configure in Jenkins credentials
+        // GitHub Container Registry (GHCR) configuration
+        DOCKER_REGISTRY = credentials('docker-registry-url') // Set to: ghcr.io
+        GITHUB_USERNAME = 'nagapraveen-automationtesting' // Replace with your GitHub username
         DOCKER_REPO = 'swasthasathi-app'
-        IMAGE_NAME = "${DOCKER_REGISTRY}/${DOCKER_REPO}"
+        IMAGE_NAME = "${DOCKER_REGISTRY}/${GITHUB_USERNAME}/${DOCKER_REPO}"
         IMAGE_TAG = "${BUILD_NUMBER}"
         FULL_IMAGE_NAME = "${IMAGE_NAME}:${IMAGE_TAG}"
         
@@ -281,3 +282,4 @@ pipeline {
         }
     }
 }
+
