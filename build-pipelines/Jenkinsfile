@@ -193,6 +193,7 @@ pipeline {
                                 kubectl get ingress -n ${NAMESPACE}
                             """
                         }
+                        }
                     }
                 }
             }
