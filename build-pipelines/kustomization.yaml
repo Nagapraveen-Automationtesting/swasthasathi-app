@@ -22,6 +22,7 @@ commonLabels:
 # Images to replace (useful for Jenkins pipeline)
 images:
   - name: swasthasathi-app
+    newName: swasthasathi-app  # Will be replaced by Jenkins with full registry path
     newTag: latest # This will be replaced by Jenkins with actual build tag
 
 # ConfigMap generator (alternative to configmap.yaml)
@@ -40,3 +41,4 @@ namespace: swasthasathi
 
 # Name prefix for all resources
 # namePrefix: prod-
+
