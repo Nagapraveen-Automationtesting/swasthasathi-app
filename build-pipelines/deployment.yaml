@@ -37,6 +37,8 @@ spec:
           value: "production"
         - name: VITE_APP_BASE_PATH
           value: "/swasthasathi-app/"
+        - name: NGINX_ENTRYPOINT_QUIET_LOGS
+          value: "1"
         resources:
           requests:
             memory: "64Mi"
@@ -71,9 +73,6 @@ spec:
           capabilities:
             drop:
             - ALL
-        env:
-        - name: NGINX_ENTRYPOINT_QUIET_LOGS
-          value: "1"
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
 ---
