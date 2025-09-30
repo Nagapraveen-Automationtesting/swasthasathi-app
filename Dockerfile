@@ -12,7 +12,7 @@ RUN npm run build
 
 FROM nginx:alpine as production-stage
 
-COPY nginx-simple.conf /etc/nginx/conf.d/default.conf
+COPY nginx-no-cache.conf /etc/nginx/nginx.conf
 
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 
@@ -20,12 +20,10 @@ RUN addgroup -g 1001 -S nodejs && \
     adduser -S nextjs -u 1001
 
 RUN chown -R nginx:nginx /usr/share/nginx/html && \
-    chmod -R 755 /usr/share/nginx/html
-
-# Create nginx cache directories with proper permissions
-RUN mkdir -p /var/cache/nginx /var/run && \
-    chown -R nginx:nginx /var/cache/nginx /var/run && \
-    chmod -R 755 /var/cache/nginx /var/run
+    chmod -R 755 /usr/share/nginx/html && \
+    mkdir -p /tmp /var/cache/nginx /var/run && \
+    chown -R nginx:nginx /tmp /var/cache/nginx /var/run && \
+    chmod -R 755 /tmp /var/cache/nginx /var/run
 
 EXPOSE 5000
 
