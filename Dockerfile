@@ -23,7 +23,7 @@ RUN addgroup -g 1001 -S nodejs && \
 # Set proper ownership and permissions
 RUN chown -R nginx:nginx /usr/share/nginx/html && \
     chmod -R 755 /usr/share/nginx/html && \
-    mkdir -p /tmp /var/cache/nginx /var/run /var/log/nginx && \
+    mkdir -p /tmp /var/cache/nginx /var/run /var/log/nginx /tmp/client_temp /tmp/proxy_temp /tmp/fastcgi_temp /tmp/uwsgi_temp /tmp/scgi_temp && \
     chown -R nginx:nginx /tmp /var/cache/nginx /var/run /var/log/nginx && \
     chmod -R 755 /tmp /var/cache/nginx /var/run /var/log/nginx && \
     chown -R nginx:nginx /etc/nginx && \
