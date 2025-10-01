@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: swasthasathi-app-loadbalancer-minimal
+  namespace: swasthasathi
+  labels:
+    app: swasthasathi-app-minimal
+spec:
+  type: LoadBalancer
+  selector:
+    app: swasthasathi-app-minimal
+  ports:
+  - name: http
+    port: 80
+    targetPort: 5000
+    protocol: TCP
+  - name: https
+    port: 443
+    targetPort: 5000
+    protocol: TCP

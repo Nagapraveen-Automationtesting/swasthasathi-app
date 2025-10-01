@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: swasthasathi-app-minimal
+  namespace: swasthasathi
+  labels:
+    app: swasthasathi-app-minimal
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: swasthasathi-app-minimal
+  template:
+    metadata:
+      labels:
+        app: swasthasathi-app-minimal
+    spec:
+      imagePullSecrets:
+      - name: ghcr-secret
+      containers:
+      - name: swasthasathi-app
+        image: ghcr.io/nagapraveen-automationtesting/swasthasathi-app:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+        # No resource limits
+        # No health checks
+        # No security context
+        command: ["nginx", "-g", "daemon off;"]
+        args: []
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: swasthasathi-app-minimal-service
+  namespace: swasthasathi
+spec:
+  selector:
+    app: swasthasathi-app-minimal
+  ports:
+  - port: 80
+    targetPort: 5000
+  type: ClusterIP
