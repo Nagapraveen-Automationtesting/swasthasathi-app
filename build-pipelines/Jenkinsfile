@@ -179,12 +179,9 @@ pipeline {
                                     --docker-password=\$REGISTRY_PASS \
                                     --dry-run=client -o yaml | kubectl apply -f -
                                 
-                                # Apply manifests using kustomize
-                                kubectl apply -k .
-                                
-                                # Wait for deployment to be ready
-                                echo "⏳ Waiting for deployment to be ready..."
-                                kubectl rollout status deployment/swasthasathi-app -n ${NAMESPACE} --timeout=300s
+                                # Use deployment script to handle immutable selector issue
+                                chmod +x deploy.sh
+                                ./deploy.sh
                                 
                                 # Verify deployment
                                 echo "✅ Deployment Status:"
