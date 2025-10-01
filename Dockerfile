@@ -36,9 +36,5 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 
 RUN apk add --no-cache curl
 
-# Copy and set up startup script
-COPY start-nginx.sh /start-nginx.sh
-RUN chmod +x /start-nginx.sh
-
-CMD ["/start-nginx.sh"]
+CMD ["nginx", "-g", "daemon off;"]
 
